@@ -1,0 +1,18 @@
+# Local design history, screenshots, and preview sessions
+/backups/
+.superpowers/
+
+# Generated build artifacts and local dependencies
+/build/
+/dist/
+**/build/
+**/dist/
+*.prg
+*.iq
+*.prg.debug.xml
+node_modules/
+
+# OS and editor files
+.DS_Store
+*.swp
+*.swo
