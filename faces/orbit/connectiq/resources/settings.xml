@@ -1,0 +1,139 @@
+<resources>
+    <properties>
+        <property id="Finish" type="number">0</property>
+        <property id="ShowSeconds" type="boolean">true</property>
+        <property id="ShowComplications" type="boolean">true</property>
+        <property id="ShowCenterData" type="boolean">true</property>
+        <property id="ComplicationCount" type="number">4</property>
+        <property id="CenterSource" type="number">0</property>
+        <property id="Slot1" type="number">0</property>
+        <property id="Slot2" type="number">1</property>
+        <property id="Slot3" type="number">2</property>
+        <property id="Slot4" type="number">3</property>
+        <property id="Slot5" type="number">4</property>
+        <property id="Slot6" type="number">5</property>
+    </properties>
+    <strings>
+        <string id="FinishTitle">Finish</string>
+        <string id="TitaniumFinish">Brushed titanium</string>
+        <string id="MidnightFinish">Midnight OLED</string>
+        <string id="AmberFinish">Amber instrument</string>
+        <string id="ShowSecondsTitle">Show seconds rail</string>
+        <string id="ShowComplicationsTitle">Show battery and steps</string>
+        <string id="ShowCenterDataTitle">Show center graph</string>
+        <string id="ComplicationCountTitle">Complication count</string>
+        <string id="ComplicationCountOption2">2</string>
+        <string id="ComplicationCountOption3">3</string>
+        <string id="ComplicationCountOption4">4</string>
+        <string id="ComplicationCountOption5">5</string>
+        <string id="ComplicationCountOption6">6</string>
+        <string id="CenterSourceTitle">Center graph</string>
+        <string id="CenterSourceOption0">Step goal</string>
+        <string id="CenterSourceOption1">Heart rate history</string>
+        <string id="Slot1Title">Complication 1</string>
+        <string id="Source0">Battery</string>
+        <string id="Source1">Steps</string>
+        <string id="Source2">Weather</string>
+        <string id="Source3">Active minutes</string>
+        <string id="Source4">Distance</string>
+        <string id="Source5">Calories</string>
+        <string id="Slot2Title">Complication 2</string>
+        <string id="Slot3Title">Complication 3</string>
+        <string id="Slot4Title">Complication 4</string>
+        <string id="Slot5Title">Complication 5</string>
+        <string id="Slot6Title">Complication 6</string>
+    </strings>
+    <settings>
+        <setting propertyKey="@Properties.Finish" title="@Strings.FinishTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.TitaniumFinish</listEntry>
+                <listEntry value="1">@Strings.MidnightFinish</listEntry>
+                <listEntry value="2">@Strings.AmberFinish</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.ShowSeconds" title="@Strings.ShowSecondsTitle">
+            <settingConfig type="boolean"/>
+        </setting>
+        <setting propertyKey="@Properties.ShowComplications" title="@Strings.ShowComplicationsTitle">
+            <settingConfig type="boolean"/>
+        </setting>
+        <setting propertyKey="@Properties.ShowCenterData" title="@Strings.ShowCenterDataTitle">
+            <settingConfig type="boolean"/>
+        </setting>
+        <setting propertyKey="@Properties.ComplicationCount" title="@Strings.ComplicationCountTitle">
+            <settingConfig type="list">
+                <listEntry value="2">@Strings.ComplicationCountOption2</listEntry>
+                <listEntry value="3">@Strings.ComplicationCountOption3</listEntry>
+                <listEntry value="4">@Strings.ComplicationCountOption4</listEntry>
+                <listEntry value="5">@Strings.ComplicationCountOption5</listEntry>
+                <listEntry value="6">@Strings.ComplicationCountOption6</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.CenterSource" title="@Strings.CenterSourceTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.CenterSourceOption0</listEntry>
+                <listEntry value="1">@Strings.CenterSourceOption1</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot1" title="@Strings.Slot1Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot2" title="@Strings.Slot2Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot3" title="@Strings.Slot3Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot4" title="@Strings.Slot4Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot5" title="@Strings.Slot5Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.Slot6" title="@Strings.Slot6Title">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.Source0</listEntry>
+                <listEntry value="1">@Strings.Source1</listEntry>
+                <listEntry value="2">@Strings.Source2</listEntry>
+                <listEntry value="3">@Strings.Source3</listEntry>
+                <listEntry value="4">@Strings.Source4</listEntry>
+                <listEntry value="5">@Strings.Source5</listEntry>
+            </settingConfig>
+        </setting>
+    </settings>
+</resources>

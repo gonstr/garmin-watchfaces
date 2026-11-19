@@ -6,7 +6,7 @@ A collection of Garmin watch face prototypes. Each design lives under `faces/<na
 | --- | --- | --- |
 | Orbit | [faces/orbit/mockup/index.html](faces/orbit/mockup/index.html) | Recessed analog dial, a segmented seconds light, configurable complications, and a center display that adapts to the selected data. |
 
-Orbit is a browser prototype with illustrative data. A native Connect IQ build is still to come.
+Orbit has a browser mockup with illustrative data and a native Connect IQ prototype targeting the fēnix 9 Pro 47 mm AMOLED. See [Orbit’s build and sideload instructions](faces/orbit/README.md).
 
 ## Preview locally
 

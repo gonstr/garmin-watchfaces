@@ -78,7 +78,7 @@ select{max-width:195px;background:#0b110d;color:#c1d5c8;border:1px solid #354b3c
 .screen .center-chart *{filter:none}
 </style>
 <style>
-.center-variants{width:100%;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid #2b3b31;padding:0 0 16px;margin-bottom:4px}.center-variants button{padding:11px 16px;border:1px solid #354b3d;border-radius:6px;background:transparent;color:#9fb4a7;font:12px system-ui}.center-variants button[aria-pressed=true]{background:#253e30;border-color:var(--ink);color:var(--ink)}.center-variants p{width:100%;font-size:12px;padding:4px 0 0}body[data-center-treatment]:not([data-center-treatment=original]) .graph-axis .axis-value{paint-order:stroke;stroke:#010503;stroke-width:2.5;stroke-linejoin:round}.curved-plot>path,.curved-plot>polyline{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.center-variants{width:100%;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid #2b3b31;padding:0 0 16px;margin-bottom:4px}.center-variants button{padding:11px 16px;border:1px solid #354b3d;border-radius:6px;background:transparent;color:#9fb4a7;font:12px system-ui}.center-variants button[aria-pressed=true]{background:#253e30;border-color:var(--ink);color:var(--ink)}.center-variants p{width:100%;font-size:12px;padding:4px 0 0}.graph-axis .axis-value{paint-order:stroke;stroke:#010503;stroke-width:2.5;stroke-linejoin:round}.curved-plot>path,.curved-plot>polyline{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <style>
 body[data-layout] .time-accent .accent-ring{stroke-width:1;opacity:.36}
@@ -108,7 +108,6 @@ body .screen .center-chart .temperature-bar{opacity:.36;stroke-width:2.2}
 body .screen .center-chart .history-bar{opacity:.48}
 body .screen .center-chart .weather-now{opacity:.2}
 </style>
-<style>.screen .middle-band-background{fill:#0d1611;stroke:none;pointer-events:none}</style>
 <style>.graph-plot>path,.graph-plot>polyline{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}</style>
 <style>.center-divider{fill:none;stroke:#b0bdb5;stroke-width:.65;opacity:.23}.graph-bounds{fill:transparent;stroke:none;pointer-events:none}</style>
 
@@ -127,76 +126,44 @@ body[data-finish="titanium"] .watch {
     inset 0 0 0 4px #15191880, inset 0 0 8px 4px #0008;
 }
 body[data-finish="titanium"] .watch::after { border: 1px solid #ebeee575; }
+#orbit {
+  background: #000;
+  border-color: #000;
+  box-shadow: none;
+}
 body[data-finish="titanium"] #orbit {
-  background: radial-gradient(ellipse at 36% 20%, #353934, #191c19 53%, #0b0e0c 92%);
-  border-color: #0a0c0b;
-  box-shadow: inset 0 0 12px #000d, 0 0 0 1px #c1c8c188;
+  background: radial-gradient(circle, #171717 0%, #111 64%, #080808 84%, #000 100%);
 }
-body[data-finish="titanium"] #orbit::after {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: linear-gradient(146deg, #fff2, #fff0 33%);
-}
-body[data-finish="titanium"] #orbit .middle-band-background { fill: #4a4e42; }
-body[data-finish="titanium"] #orbit .time-accent { color: #e4e7dc; }
-body[data-finish="titanium"] #orbit .dial-tick { opacity: .65; }
-body[data-finish="titanium"] #orbit .minor-tick { opacity: .29; }
-body[data-finish="titanium"] #orbit .analog-pointer { stroke: #f4eee7; stroke-width: .55px; }
-body[data-finish="titanium"] #orbit .metric-arc { opacity: .77; }
-
-/* A flat black ceramic case with a sharp, cool OLED display. */
 body[data-finish="midnight"] .watch {
-  background: #101725;
-  box-shadow: 0 18px 35px #000b, inset 0 0 0 1px #57698b,
-    inset 0 0 0 4px #191f32;
+  background: #181818;
+  box-shadow: 0 18px 35px #000b, inset 0 0 0 1px #555, inset 0 0 0 4px #222;
 }
-body[data-finish="midnight"] .watch::after { border: 1px solid #8398c238; }
-body[data-finish="midnight"] #orbit { background: #01020a; border-color: #080e1b; --finish-minutes: #8ab6f4; }
-body[data-finish="midnight"] #orbit .middle-band-background { fill: #101c34; }
-body[data-finish="midnight"] #orbit .time-accent { color: #829fd4; }
-body[data-finish="midnight"] #orbit .instrument {
-  color: color-mix(in srgb, #7dcfff 45%, var(--finish-accent)) !important;
-}
-body[data-finish="midnight"] #orbit .metric-arc { stroke-linecap: butt; }
-body[data-finish="midnight"] #orbit .wide-time tspan { fill: #f0f7ff; }
-body[data-finish="midnight"] #orbit .wide-time tspan:nth-child(2) { fill: #8ab6f4; }
-body[data-finish="midnight"] #orbit .center-divider { stroke: #769de9; opacity: .44; }
-body[data-finish="midnight"] #orbit .center-complication { color: #86d7ff; }
-body[data-finish="midnight"] #orbit .graph-header .graph-source,
-body[data-finish="midnight"] #orbit .center-date { fill: #9fb4da; }
-
-/* Warm instrument phosphor and a fine, low-contrast raster texture. */
+body[data-finish="midnight"] .watch::after { border: 1px solid #ffffff24; }
 body[data-finish="amber"] .watch {
-  background: linear-gradient(148deg, #594a33, #252019 44%, #413422);
-  box-shadow: 0 18px 35px #000b, inset 0 0 0 1px #857150,
-    inset 0 0 0 4px #211b14;
+  background: linear-gradient(148deg, #484848, #222 44%, #373737);
+  box-shadow: 0 18px 35px #000b, inset 0 0 0 1px #676767, inset 0 0 0 4px #252525;
 }
-body[data-finish="amber"] .watch::after { border: 1px solid #aa8c5c57; }
-body[data-finish="amber"] #orbit { background: #160c03; border-color: #100b07; --finish-minutes: #eaa658; }
-body[data-finish="amber"] #orbit::after {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: repeating-linear-gradient(0deg, #06030035 0 1px, transparent 1px 3px);
-}
-body[data-finish="amber"] #orbit .middle-band-background { fill: #33200c; }
-body[data-finish="amber"] #orbit .time-accent { color: #e1a159; }
-body[data-finish="amber"] #orbit .instrument {
-  color: color-mix(in srgb, #ffad4f 78%, var(--finish-accent)) !important;
-}
-body[data-finish="amber"] #orbit .seconds-cursor,
-body[data-finish="amber"] #orbit .center-complication { color: #ffbb64; }
-body[data-finish="amber"] #orbit .graph-header .graph-current,
-body[data-finish="amber"] #orbit .wide-time tspan { fill: #ffcb82; }
-body[data-finish="amber"] #orbit .wide-time tspan:nth-child(2) { fill: #eaa658; }
-body[data-finish="amber"] #orbit .graph-header .graph-source,
-body[data-finish="amber"] #orbit .center-date { fill: #e4a763; }
-body[data-finish="amber"] #orbit .center-divider { stroke: #e4a763; opacity: .42; }
+body[data-finish="amber"] .watch::after { border: 1px solid #ffffff38; }
+body[data-finish="amber"] #orbit { background: #101010; }
+
+#orbit .time-accent { color: var(--theme-ring); }
+#orbit .analog-pointer { display: inline; }
+#orbit .dial-tick { opacity: .68; }
+#orbit .minor-tick { opacity: .34; }
+body[data-finish="titanium"] #orbit .dial-tick { stroke-linecap: round; }
+body[data-finish="titanium"] #orbit .quarter-tick { stroke-width: 1.45; }
+body[data-finish="midnight"] #orbit .dial-tick { stroke-linecap: round; stroke-width: .75; }
+body[data-finish="midnight"] #orbit .metric-arc { stroke-width: 2; }
+body[data-finish="midnight"] #orbit .instrument .lit { r: 2.7; }
+body[data-finish="amber"] #orbit .dial-tick,
+body[data-finish="amber"] #orbit .instrument .metric-arc,
+body[data-finish="amber"] #orbit .instrument .track { stroke-linecap: butt; }
+body[data-finish="amber"] #orbit .hour-tick,
+body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
+#orbit .chart-frame { fill: none; stroke: currentColor; opacity: .25; stroke-width: .55; }
+#orbit .center-complication { color: var(--theme-graph); }
+#orbit .sun-arch, #orbit .sun-noon, #orbit .sun-elapsed { stroke: currentColor; }
+#orbit .sun-marker { fill: currentColor; }
 </style>
 
 <style>
@@ -224,113 +191,33 @@ body[data-finish="amber"] #orbit .center-divider { stroke: #e4a763; opacity: .42
 </style>
 
 <style>
-#orbit .seconds-retro, #orbit .seconds-afterimage, #orbit .seconds-metal { display: none; }
-
-body[data-finish="titanium"] #orbit .quarter-tick {
-  filter: drop-shadow(.4px .65px .1px #080a08);
-  stroke: #e9e6da;
-}
-body[data-finish="titanium"] #orbit .analog-pointer {
-  stroke: #f4eee7;
-  stroke-width: .65px;
-  paint-order: stroke fill;
-}
-body[data-finish="titanium"] #orbit .seconds-accent { fill: url(#seconds-polished-metal); }
-body[data-finish="titanium"] #orbit .seconds-metal { display: inline; fill: #fff; opacity: .78; }
-body[data-finish="titanium"] #orbit .seconds-trail { opacity: .2; }
-
-body[data-finish="midnight"] #orbit .accent-ring { opacity: .065; }
-body[data-finish="midnight"] #orbit .dial-tick { stroke-linecap: butt; }
-body[data-finish="midnight"] #orbit .seconds-cursor { color: #87d7ff; }
-body[data-finish="midnight"] #orbit .seconds-trail { display: none; }
-body[data-finish="midnight"] #orbit .seconds-afterimage { display: inline; fill: currentColor; }
-
-body[data-finish="amber"] #orbit .accent-ring { opacity: .09; }
-body[data-finish="amber"] #orbit .dial-tick { stroke-linecap: butt; }
-
-body[data-finish="amber"] #orbit .seconds-trail,
-body[data-finish="amber"] #orbit .seconds-dot { display: none; }
-body[data-finish="amber"] #orbit .seconds-retro { display: inline; }
-
-#orbit .dial-tick.tick-passing {
-  stroke: var(--theme-second);
-  opacity: .84;
-}
-body[data-finish="midnight"] #orbit .dial-tick.tick-passing { stroke: #87d7ff; }
-body[data-finish="amber"] #orbit .dial-tick.tick-passing { stroke: #ffbb64; }
-body[data-finish="titanium"] #orbit .dial-tick.tick-passing { stroke: #f3e9cb; }
-</style>
-
-<style>
-#orbit .analog-pointer, #orbit .dial-rail { display: none; }
-body[data-finish="titanium"] #orbit .pointer-titanium,
-body[data-finish="midnight"] #orbit .pointer-midnight,
-body[data-finish="amber"] #orbit .pointer-amber { display: inline; }
-
-body[data-finish="titanium"] #orbit .accent-ring { stroke-width: 1.5; opacity: .42; }
-body[data-finish="titanium"] #orbit .dial-rail { display: inline; stroke-width: .7; opacity: .26; }
-body[data-finish="titanium"] #orbit .hour-tick { stroke-width: 1.6; }
-body[data-finish="titanium"] #orbit .minor-tick { opacity: .13; }
-
-body[data-finish="midnight"] #orbit .accent-ring { stroke-width: .9; opacity: .32; }
-body[data-finish="midnight"] #orbit .time-accent { color: #a0afbc; }
-body[data-finish="midnight"] #orbit .quarter-tick { stroke-width: 1.5; opacity: .56; }
-body[data-finish="midnight"] #orbit .minor-tick:not(.tick-passing) { opacity: .22; }
-body[data-finish="midnight"] #orbit .pointer-midnight {
-  filter: none;
-  stroke-linejoin: round;
-}
-body[data-finish="midnight"] #orbit .seconds-cursor { color: #9abacb; }
-body[data-finish="midnight"] #orbit .seconds-afterimage { display: none; }
-body[data-finish="midnight"] #orbit .dial-tick.tick-passing { stroke: #9abacb; }
-
-body[data-finish="amber"] #orbit .accent-ring { stroke-width: .9; opacity: .36; }
-body[data-finish="amber"] #orbit .dial-rail { display: inline; stroke-width: 1.4; opacity: .32; }
-body[data-finish="amber"] #orbit .hour-tick { stroke-width: 1.9; opacity: .6; }
-body[data-finish="amber"] #orbit .minor-tick { stroke-width: 1; opacity: .35; }
-body[data-finish="amber"] #orbit .analog-pointer { stroke: none; }
-body[data-finish="amber"] #orbit .pointer-amber { color: #ffbb64 !important; }
-body[data-finish="midnight"] #orbit .pointer-midnight { color: #8ab6f4 !important; }
-</style>
-<style>
-#orbit .dial-trench-floor { fill: #282e2b; }
-#orbit .dial-inner-lip { stroke-width: .8; }
-#orbit .dial-outer-lip { stroke-width: .65; opacity: .68; }
-body[data-finish="titanium"] #orbit .dial-trench-floor { fill: #444940; }
-body[data-finish="midnight"] #orbit .dial-trench-floor { fill: #1d2a3c; }
-body[data-finish="amber"] #orbit .dial-trench-floor { fill: #402a17; }
-body[data-finish="amber"] #orbit .short-tick { stroke-dasharray: 0 .65 1.45 4; }
 #orbit .seconds-rail { color: var(--theme-second); }
-body[data-finish="midnight"] #orbit .seconds-rail { color: #8ab6f4; }
-body[data-finish="amber"] #orbit .seconds-rail { color: #ffbb64; }
-#orbit .second-segment { stroke: currentColor; stroke-width: .7; opacity: .23; }
-#orbit .second-active {
-  stroke-width: 1.32;
-  opacity: 1;
-  filter: drop-shadow(0 0 1.1px currentColor);
-}
+#orbit .second-active { fill: currentColor; }
 </style>
 </head>
 <body data-finish="titanium"><main>
 <div class="eyebrow">Lumen / Orbit · study 02</div>
-<header><div><h1>Orbit finishes</h1></div></header>
+<header><div><h1>Orbit themes</h1></div></header>
 <section class="controls" aria-label="Preview controls">
-<div class="center-variants finish-picker" role="group" aria-label="Watch face finish">
-  <button type="button" data-finish-choice="titanium" aria-pressed="true">Brushed titanium</button>
-  <button type="button" data-finish-choice="midnight" aria-pressed="false">Midnight OLED</button>
-  <button type="button" data-finish-choice="amber" aria-pressed="false">Amber instrument</button>
-  <p id="finish-description" aria-live="polite">Brushed metal, a recessed dial, and warm luminous markers</p>
+<div class="center-variants finish-picker" role="group" aria-label="Theme">
+  <span>THEME</span>
+  <button type="button" data-finish-choice="titanium" aria-pressed="true">Classic</button>
+  <button type="button" data-finish-choice="midnight" aria-pressed="false">Minimal</button>
+  <button type="button" data-finish-choice="amber" aria-pressed="false">Instrument</button>
+  <p id="finish-description" aria-live="polite">Brushed metal, a graphite dial, and chamfered hands</p>
 </div>
 
-<label class="control"><input id="shaded-middle" type="checkbox" checked> Shaded middle</label>
 <label class="control">LAYOUT <select id="layout" aria-label="Watch layout comparison"><option value="dense" selected>Expanded core · outer time</option><option value="previous">Previous · outer complications</option></select></label>
 <label class="control">TIME <input id="time" type="time" value="19:42:18" step="1" aria-label="Preview time"></label>
 <button class="switch" id="play" aria-pressed="true">Pause motion</button><button class="switch" id="now">Current time</button>
 <label class="control">EXPLORE <input id="timeline" type="range" min="0" max="1439" value="1182" aria-label="Time of day"></label>
-<label class="control">COLOR THEME <select id="color-theme" aria-label="Watch color theme"><optgroup label="Single accent"><option value="green">Phosphor green</option><option value="blue">Ice blue</option><option value="amber">Amber</option><option value="violet">Ultraviolet</option></optgroup><optgroup label="Multicolor"><option value="aurora" selected>Aurora · mint / violet / gold</option><option value="sunset">Sunset · coral / rose / amber</option><option value="ocean">Ocean · cyan / teal / blue</option><option value="arcade">Arcade · cyan / pink / yellow</option></optgroup></select></label>
+<label class="control">ACCENT COLOR <input id="accent-color" type="color" value="#a8ffcd"></label>
+<label class="control">DATA COLOR <input id="data-color" type="color" value="#9bbde0"></label>
 <label class="control">GLOW <input id="glow" type="range" min="0" max="12" value="3" aria-label="Glow strength"></label>
-<div class="time-accent-controls"><label class="control">TIME ACCENT <select id="time-accent" aria-label="Analog time accent"><option value="off">Off</option><option value="floating">Hands only</option><option value="compass">Four compass marks</option><option value="ring">Trench</option><option value="ring-compass">Trench + compass marks</option><option value="ring-hours">Trench + 12 hour marks</option><option value="ring-ticks" selected>Trench + 60 ticks</option></select></label><label class="control"><input id="show-seconds" type="checkbox" checked> Seconds light</label></div>
-<label class="control">GUIDES <select id="guides" aria-label="Guide detail for time and complications"><option value="bare">Bare rings</option><option value="bare-icons" selected>Bare rings + icons/values</option><option value="ticks">Ticks</option><option value="full">Full detail · icons + values</option></select></label>
+<div class="time-accent-controls"><label class="control">TIME ACCENT <select id="time-accent" aria-label="Analog time accent"><option value="off">Off</option><option value="floating">Hands only</option><option value="compass">Four compass marks</option><option value="ring-hours">12 hour marks</option><option value="theme" selected>Theme default</option><option value="ring-ticks">60 minute ticks</option></select></label><label class="control"><input id="show-seconds" type="checkbox" checked> Seconds hand</label>
+<label class="control">HAND LENGTH <input id="seconds-length" type="range" min="4" max="11" value="8" step=".5"></label>
+<label class="control">HAND WIDTH <input id="seconds-thickness" type="range" min="1.4" max="4" value="2.8" step=".2"></label></div>
+<label class="control">COMPLICATION GUIDES <select id="guides" aria-label="Complication guide detail"><option value="bare">Tracks only</option><option value="bare-icons" selected>Tracks + readouts</option><option value="ticks">Tracks + ticks</option><option value="full">Tracks + ticks + readouts</option></select></label>
 <label class="control">COMPLICATIONS <select id="complication-count" aria-label="Number of complications"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option></select></label>
 <label class="control">TIME FONT <select id="time-font" aria-label="Time digit font"><option value="mono">Mono · Menlo</option><option value="sans">Clean · Helvetica</option><option value="rounded">Rounded · Avenir</option><option value="roboto" selected>Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
 <label class="control">TIME WEIGHT <select id="time-weight" aria-label="Time font weight"><option value="300">Light</option><option value="400">Regular</option><option value="500">Medium</option><option value="600" selected>Semibold</option><option value="700">Bold</option><option value="800">Heavy</option></select></label>
@@ -401,16 +288,17 @@ const selectorPanel=document.createElement('section');selectorPanel.className='s
 function arcPath(radius,start,end){const a=point(radius,start),b=point(radius,end);return `M${a} A${radius} ${radius} 0 ${end-start>180?1:0} 1 ${b}`}
 function complicationCount(){return Math.min(6,Math.max(2,Number($('complication-count').value)||4))}
 function applyGlow(){const value=Number($('glow').value),style=document.documentElement.style;style.setProperty('--blur',value+'px');style.setProperty('--hand-glow-filter',value<=0?'none':`drop-shadow(0 0 ${Math.min(.65,value*.08)}px currentColor)`);style.setProperty('--glow-filter',value<=0?'none':`drop-shadow(0 0 ${value*.3}px currentColor)`)}
-function singleAccent(primary){return {primary,ring:primary,hour:'#ffce91',minute:primary,second:primary,graph:primary,date:primary,rain:'#80bdff',complications:[primary]}}
-const colorThemes={
-green:singleAccent('#a8ffcd'),blue:singleAccent('#80dcff'),amber:{...singleAccent('#ffbd79'),hour:'#fff0d6'},violet:singleAccent('#cab1ff'),
-aurora:{primary:'#a8ffcd',ring:'#9aaeff',hour:'#ffd08b',minute:'#a8ffcd',second:'#9fc5ff',graph:'#dbabff',date:'#d5d1ef',rain:'#80bdff',complications:['#a8ffcd','#b7adff','#ffd08b','#8ddaff','#ffa9d0','#a9e8ba']},
-sunset:{primary:'#ffbd91',ring:'#bcabff',hour:'#ffd49b',minute:'#ff9fbd',second:'#b6a8ff',graph:'#ffb99d',date:'#f0cbd6',rain:'#80bdff',complications:['#ffc48e','#ff91a4','#dcadff','#ffd176','#ffb8ce','#bbadff']},
-ocean:{primary:'#83e8e0',ring:'#72b7ed',hour:'#d5f4ff',minute:'#63e6d6',second:'#ffcd85',graph:'#8cebd3',date:'#bad6e8',rain:'#80bdff',complications:['#83e8e0','#83bcff','#b0edd4','#73d7f3','#a5c3ff','#b3e9e4']},
-arcade:{primary:'#9ce9ff',ring:'#b09bff',hour:'#ffcf6f',minute:'#72f4e2',second:'#ff8ac9',graph:'#ffa1d8',date:'#d9cef5',rain:'#80bdff',complications:['#8fe8ff','#ff9acb','#ffe28d','#bcadff','#a0efaf','#ffae94']}
-};
-function currentTheme(){return colorThemes[$('color-theme').value]||colorThemes.aurora}
-function applyTheme(){const theme=currentTheme(),style=document.documentElement.style;style.setProperty('--ink',theme.primary);style.setProperty('--rgb',[1,3,5].map(i=>parseInt(theme.primary.slice(i,i+2),16)).join(','));for(const key of ['ring','hour','minute','second','graph','date','rain'])style.setProperty('--theme-'+key,theme[key])}
+function applyColors(){
+  const accent = $('accent-color').value;
+  const data = $('data-color').value;
+  const style = document.documentElement.style;
+  style.setProperty('--ink', accent);
+  style.setProperty('--rgb', [1,3,5].map(i => parseInt(accent.slice(i,i+2),16)).join(','));
+  for(const key of ['ring','hour','minute','second']) style.setProperty('--theme-'+key, accent);
+  style.setProperty('--theme-graph', data);
+  style.setProperty('--theme-date', '#c1c6c2');
+  style.setProperty('--theme-rain', '#80bdff');
+}
 const fontFamilies={roboto:'"Watch Roboto", sans-serif','roboto-condensed':'"Watch Roboto Condensed", sans-serif','bionic-approx':'"Watch Barlow", sans-serif',mono:'Menlo, ui-monospace, monospace',sans:'"Helvetica Neue", Arial, sans-serif',rounded:'"Avenir Next", "Trebuchet MS", sans-serif',condensed:'"DIN Condensed", "Arial Narrow", sans-serif',technical:'"Courier New", monospace',serif:'Georgia, serif'};
 const CENTER_SIZES={time:40,date:9,value:12,graphWidth:110,graphHeight:20};
 function textSize(){return Math.min(12,Math.max(7,Number($('text-size').value)||10))}
@@ -468,7 +356,7 @@ function instrument(source,slot){
  const {center,span,start,end}=sectorGeometry(slot);
  // Outer complication tracks and ticks stay inside the display edge;
  // their inset labels stay clear of the inner time markers.
- const arcRadius=denseLayout()?110:136;
+ const arcRadius=denseLayout()?115:139;
  const r=arcRadius/.69;
  const labelRadius=(arcRadius-(denseLayout()?14:18))/.69;
  const [x,y]=point(113,center);
@@ -508,7 +396,7 @@ function instrument(source,slot){
  const guide=curvedIconValue(source,display,slot,textOnly?r:labelRadius,start,end);
  shape=textOnly?guide:shape+guide;
  }
- return `<g class="instrument" style="color:${currentTheme().complications[slot%currentTheme().complications.length]};--finish-accent:${currentTheme().complications[slot%currentTheme().complications.length]}" aria-label="${label}: ${value}. ${detail}"><title>${label}: ${value}. ${detail}</title>${shape}</g>`;
+ return `<g class="instrument" style="color:var(--theme-graph);--finish-accent:var(--theme-graph)" aria-label="${label}: ${value}. ${detail}"><title>${label}: ${value}. ${detail}</title>${shape}</g>`;
 }
 const meta=document.querySelectorAll('.meta')[1];
 function centerData(){
@@ -643,99 +531,95 @@ function renderInstrumentPlot(data, x, top, width, height, detail){
   return null;
 }
 
+function centerDataLabel(data){
+  switch(data.source){
+    case 'weather': return 'WEATHER 8H';
+    case 'daylight': return data.title;
+    case 'range': return 'HRV 7 NIGHTS';
+  }
+  if(dailyGoals[data.source]) return `${data.title} DAILY`;
+  const title = data.source === 'trend' ? 'BPM' : data.title;
+  return `${title} ${data.hours}H`;
+}
+
 function renderCenterComplication(){
-const internal=$('shaded-middle').checked;
 const data=scaledGraphData(centerData()),detail=$('graph-detail').value==='axes',width=CENTER_SIZES.graphWidth,x=150-width/2,top=170,height=CENTER_SIZES.graphHeight;
 const instrument=renderInstrumentPlot(data,x,top,width,height,detail);
-const current=instrument?.value ?? (data.value.toLocaleString('en-US')+(data.unit&&!['stress','body','steps'].includes(data.source)?(data.unit==='°'?'':' ')+data.unit:'')),sourceName=data.source==='weather'?'WEATHER':data.title;
+const current=instrument?.value ?? (data.value.toLocaleString('en-US')+(data.unit&&!['stress','body','steps'].includes(data.source)?(data.unit==='°'?'':' ')+data.unit:'')),sourceName=centerDataLabel(data);
 const fraction=value=>Math.max(0,Math.min(1,(value-data.min)/(data.max-data.min)));
 const fmt=value=>{if(data.source==='pressure')return String(Math.round(value));if(Math.abs(value)>=1000)return (value/1000).toFixed(value%1000?1:0)+'k';return Number.isInteger(value)?String(value):value.toFixed(1)};
 let chart=`<g class="graph-header"><text class="graph-source" x="${x}" y="${top-4}">${sourceName}</text><text class="graph-current" x="${x+width}" y="${top-4}" text-anchor="end">${current}</text></g>`;
-const bounds=`<rect class="graph-bounds" x="${x}" y="${top}" width="${width}" height="${height}"/>`;
+const frame=document.body.dataset.finish === 'amber' ? `<rect class="chart-frame" x="${x-3}" y="${top-1}" width="${width+6}" height="${height+2}"/>` : '';
+const bounds=frame+`<rect class="graph-bounds" x="${x}" y="${top}" width="${width}" height="${height}"/>`;
 if(instrument){
   chart+=`<g class="graph-plot" data-width="${width}" data-height="${height}">${bounds}${instrument.plot}</g>`;
   return `<g class="adaptive-complication center-complication" data-presentation="${instrument.type}"><title>Sample data. ${instrument.description}</title><g class="center-chart center-complication-unit">${chart}</g></g>`;
 }
 if(detail){
 chart+=`<g class="graph-axis">`;
-for(const t of [0,.5,1]){const value=data.min+(data.max-data.min)*t,y=top+height*(1-t);chart+=`<path class="graph-grid" d="M${x} ${y} H${x+width}"/><text class="axis-value" x="${internal?x+4:x-6}" y="${y+(internal?(t===1?7:t===0?-3:2):2)}" text-anchor="${internal?'start':'end'}">${fmt(value)}</text>`}
+for(const t of [0,.5,1]){const value=data.min+(data.max-data.min)*t,y=top+height*(1-t);chart+=`<path class="graph-grid" d="M${x} ${y} H${x+width}"/><text class="axis-value" x="${x+4}" y="${y+(t===1?7:t===0?-3:2)}" text-anchor="${'start'}">${fmt(value)}</text>`}
 const [hh,mm]=$('time').value.split(':').map(Number),now=hh*60+mm;
 for(const t of [0,.5,1]){const label=clockLabel(now-data.hours*60*(1-t));chart+=`<text x="${x+width*t}" y="${top+height+11}" text-anchor="${t===0?'start':t===1?'end':'middle'}">${label}</text>`}
 chart+='</g>';
 }
-chart+=`<g class="graph-plot" data-width="${width}" data-height="${height}" data-min="${data.min}" data-max="${data.max}"><rect class="graph-bounds" x="${x}" y="${top}" width="${width}" height="${height}"/>`;
+chart+=`<g class="graph-plot" data-width="${width}" data-height="${height}" data-min="${data.min}" data-max="${data.max}">${bounds}`;
 const points=data.history.map((value,i)=>[x+i*width/(data.history.length-1),top+height*(1-fraction(value))]);
 chart+=`<polyline class="history-line" points="${points.map(p=>p.join(',')).join(' ')}"/><circle class="graph-endpoint" cx="${points[points.length-1][0]}" cy="${points[points.length-1][1]}" r="1.6"/>`;
 chart+='</g>';
 return `<g class="adaptive-complication center-complication" data-presentation="line"><title>Illustrative ${data.title} ${data.hours}-hour series</title><g class="center-chart center-complication-unit">${chart}</g></g>`;
-}
-function renderMiddleBand(){
-if(!$('shaded-middle').checked)return '';
-const outer=denseLayout()?119:144,inner=denseLayout()?84:110;
-return `<path class="middle-band-background" fill-rule="evenodd" d="M${150+outer} 150 A${outer} ${outer} 0 1 0 ${150-outer} 150 A${outer} ${outer} 0 1 0 ${150+outer} 150 Z M${150+inner} 150 A${inner} ${inner} 0 1 0 ${150-inner} 150 A${inner} ${inner} 0 1 0 ${150+inner} 150 Z"/>`;
 }
 function dialAnnulus(inner, outer){
   const circle = radius => `M${150+radius} 150 A${radius} ${radius} 0 1 0 ${150-radius} 150 A${radius} ${radius} 0 1 0 ${150+radius} 150 Z`;
   return circle(outer) + ' ' + circle(inner);
 }
 
-function renderSecondsRail(radius, second){
-  const segments = Array.from({length:60}, (_, index) => {
-    const angle = index * 6;
-    return `<path class="second-segment${index===second?' second-active':''}" d="${arcPath(radius, angle-2.15, angle+2.15)}"/>`;
-  }).join('');
-  return `<g class="seconds-rail" fill="none">${segments}</g>`;
+function renderSecondsHand(tip, second){
+  const length = Number($('seconds-length').value);
+  const halfWidth = Number($('seconds-thickness').value) / 2;
+  const finish = document.body.dataset.finish;
+  const bevel = finish === 'titanium' ? Math.min(2, length / 3) : 0;
+  const shoulder = tip - bevel;
+  const tipHalfWidth = bevel ? halfWidth * .55 : halfWidth;
+  const root = tip - length;
+  return `<g class="seconds-rail" transform="translate(150 150) rotate(${second * 6})">
+    <path class="second-active" d="M${-halfWidth} ${-root} V${-shoulder} L${-tipHalfWidth} ${-tip} H${tipHalfWidth} L${halfWidth} ${-shoulder} V${-root} Z"/>
+  </g>`;
 }
 
 function renderTimeAccents(h,m,s){
-  const accent = $('time-accent').value;
+  const finish = document.body.dataset.finish;
+  const selected = $('time-accent').value;
+  const accent = selected === 'theme'
+    ? {titanium:'ring-hours',midnight:'compass',amber:'ring-ticks'}[finish]
+    : selected;
   $('show-seconds').disabled = accent === 'off';
+  const showSeconds = accent !== 'off' && $('show-seconds').checked;
+  $('seconds-length').disabled = $('seconds-thickness').disabled = !showSeconds;
   if(accent === 'off') return '';
 
   const inner = denseLayout() ? 125 : 85;
   const outer = denseLayout() ? 144 : 104;
   const bounds = dialAnnulus(inner, outer);
-  const gradientOffset = radius => (radius / outer * 100).toFixed(2) + '%';
-  const hasTrench = accent.startsWith('ring');
   let shapes = `<defs>
     <clipPath id="trench-hand-clip"><path d="${bounds}" clip-rule="evenodd"/></clipPath>
-    <radialGradient id="dial-trench-depth" gradientUnits="userSpaceOnUse" cx="150" cy="150" r="${outer}">
-      <stop offset="${gradientOffset(inner)}" stop-color="#000" stop-opacity=".86"/>
-      <stop offset="${gradientOffset(inner+2)}" stop-color="#000" stop-opacity=".53"/>
-      <stop offset="${gradientOffset(inner+5)}" stop-color="#000" stop-opacity=".19"/>
-      <stop offset="${gradientOffset(outer-5)}" stop-color="#000" stop-opacity=".19"/>
-      <stop offset="${gradientOffset(outer-1.3)}" stop-color="#000" stop-opacity=".64"/>
-      <stop offset="100%" stop-color="#000" stop-opacity=".89"/>
-    </radialGradient>
-    <linearGradient id="dial-lip-light" x1="0" x2="0" y1="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop stop-color="currentColor" stop-opacity=".5"/>
-      <stop offset=".5" stop-color="currentColor" stop-opacity=".1"/>
-      <stop offset="1" stop-color="currentColor" stop-opacity=".35"/>
-    </linearGradient>
   </defs>`;
-  if(hasTrench){
-    shapes += `<path class="dial-trench-floor" d="${bounds}" fill-rule="evenodd"/>
-      <path d="${bounds}" fill="url(#dial-trench-depth)" fill-rule="evenodd"/>
-      <circle class="dial-inner-lip" cx="150" cy="150" r="${inner-.45}" fill="none" stroke="url(#dial-lip-light)"/>
-      <circle class="dial-outer-lip" cx="150" cy="150" r="${outer+.28}" fill="none" stroke="url(#dial-lip-light)"/>`;
-  }
 
   const hasTicks = accent==='ring-ticks', hasHours = accent==='ring-hours';
-  const hasCompass = accent==='compass' || accent==='ring-compass';
+  const hasCompass = accent==='compass';
   if(hasTicks || hasHours || hasCompass){
     for(let i=0;i<60;i++){
       if(!hasTicks && i%(hasHours?5:15)!==0) continue;
       const kind = i%15===0?'quarter':i%5===0?'hour':'minor';
       const length = kind==='quarter'?4.8:kind==='hour'?3.6:2.1;
-      const shortTick = kind==='minor' && i%2===1 ? ' short-tick' : '';
-      for(const angle of i===0?[-.72,.72]:[i*6]){
-        const end = outer-1.5, start = end-length;
-        shapes += `<path class="dial-tick ${kind}-tick${shortTick}" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor" stroke-linecap="round"/>`;
+      const end = outer - 1.5;
+      const start = end - (finish === 'midnight' ? length * .65 : length);
+      const angles = finish === 'titanium' && selected === 'theme' && kind === 'quarter' ? [i*6-.8,i*6+.8] : [i*6];
+      for(const angle of angles){
+        shapes += `<path class="dial-tick ${kind}-tick" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor"/>`;
       }
     }
   }
 
-  const theme = currentTheme();
   const angles = [(h%12+m/60+s/3600)*30, (m+s/60)*6];
   const root = inner - 4;
   const hourEnd = outer - 6;
@@ -746,24 +630,21 @@ function renderTimeAccents(h,m,s){
       `M-2 ${-root} V${-minuteEnd+5} L0 ${-minuteEnd} L2 ${-minuteEnd+5} V${-root} Z`
     ],
     midnight: [
-      `M-3.7 ${-root} L-2.65 ${-hourEnd} H2.65 L3.7 ${-root} Z`,
-      `M-1.65 ${-root} V${-minuteEnd+4} L0 ${-minuteEnd} L1.65 ${-minuteEnd+4} V${-root} Z`
+      `M-2.6 ${-root} V${-hourEnd} H2.6 V${-root} Z`,
+      `M-1.2 ${-root} V${-minuteEnd} H1.2 V${-root} Z`
     ],
     amber: [
-      `M-5.5 ${-root} L0 ${-hourEnd} L5.5 ${-root} Z`,
-      `M-1.25 ${-root} L-2.8 ${-minuteEnd+5} L0 ${-minuteEnd} L2.8 ${-minuteEnd+5} L1.25 ${-root} Z`
+      `M-4.5 ${-root} V${-hourEnd+5} H-2.6 V${-hourEnd} H2.6 V${-hourEnd+5} H4.5 V${-root} Z`,
+      `M-1.65 ${-root} V${-minuteEnd} H1.65 V${-root} Z`
     ]
   };
+  if(showSeconds) shapes += renderSecondsHand(outer-5,s);
   shapes += '<g class="dial-hands" clip-path="url(#trench-hand-clip)">';
-  for(const [finish, paths] of Object.entries(pointerPaths)){
-    for(let i=0;i<paths.length;i++){
-      const color = i===0?theme.hour:theme.minute;
-      const role = i===0?'hour-pointer':'minute-pointer';
-      shapes += `<path class="analog-stroke analog-pointer pointer-${finish} ${role}" style="color:${color};--finish-accent:${color}" d="${paths[i]}" transform="translate(150 150) rotate(${angles[i]})" fill="currentColor"/>`;
-    }
-  }
+  pointerPaths[finish].forEach((path,index)=>{
+    const role = index===0?'hour-pointer':'minute-pointer';
+    shapes += `<path class="analog-stroke analog-pointer ${role}" d="${path}" transform="translate(150 150) rotate(${angles[index]})" fill="currentColor"/>`;
+  });
   shapes += '</g>';
-  if($('show-seconds').checked) shapes += renderSecondsRail(inner-3,s);
   return `<g class="time-accent">${shapes}</g>`;
 }
 function visibleTextBounds(el){
@@ -798,21 +679,21 @@ const place=(item,top)=>{item.el.setAttribute('transform',`translate(0 ${top-ite
 const parent=svg.querySelector('.center-complication');let center=null;
 if(parent){const chart=parent.querySelector('.center-chart'),box=chart.getBBox();let bounds={x:box.x,y:box.y,width:box.width,height:box.height};if($('graph-detail').value==='minimal'){const top=Math.min(...Array.from(chart.querySelectorAll('.graph-header text')).map(el=>visibleTextBounds(el).y),chart.querySelector('.graph-plot').getBBox().y);bounds={...bounds,y:top,height:box.y+box.height-top}}center={el:chart,bounds};}
 // Two blocks share equal breathing room around the horizontal midline.
-const dividerY=150,margin=10,dateTimeGap=7;
+const dividerY=150,margin=9,dateTimeGap=6;
 const headerHeight=date.bounds.height+dateTimeGap+time.bounds.height;
 let cursor=dividerY-margin-headerHeight;
 place(date,cursor);cursor+=date.bounds.height+dateTimeGap;
 place(time,cursor);
 if(center)place(center,dividerY+margin);
 const divider=document.createElementNS('http://www.w3.org/2000/svg','path');
-divider.classList.add('center-divider');divider.setAttribute('d',`M${150-CENTER_SIZES.graphWidth/2-6} ${dividerY} H${150+CENTER_SIZES.graphWidth/2+6}`);svg.appendChild(divider);
+divider.classList.add('center-divider');divider.setAttribute('d',`M${150-CENTER_SIZES.graphWidth/2} ${dividerY} H${150+CENTER_SIZES.graphWidth/2}`);svg.appendChild(divider);
 svg.dataset.headerHeight=headerHeight;svg.dataset.centerMargin=margin;
 }
 meta.querySelector('.index').textContent='HOURS → MINUTES → SECONDS';
 meta.querySelector('h2').textContent='Orbit';
 meta.querySelector('p').remove();
-render=function(){if(fontsLoading)return;document.body.dataset.centerTreatment=$('shaded-middle').checked?'band':'original';document.body.dataset.layout=denseLayout()?'dense':'previous';applyGlow();applyTheme();applyFonts();document.documentElement.style.setProperty('--time-weight',$('time-weight').value||'600');const parts=$('time').value.split(':').map(Number);const h=parts[0],m=parts[1];if(!Number.isFinite(h)||!Number.isFinite(m))return;seconds=parts[2]||0;
-let content=renderMiddleBand()+renderTimeAccents(h,m,seconds);
+render=function(){if(fontsLoading)return;document.body.dataset.layout=denseLayout()?'dense':'previous';applyGlow();applyColors();applyFonts();document.documentElement.style.setProperty('--time-weight',$('time-weight').value||'600');const parts=$('time').value.split(':').map(Number);const h=parts[0],m=parts[1];if(!Number.isFinite(h)||!Number.isFinite(m))return;seconds=parts[2]||0;
+let content=renderTimeAccents(h,m,seconds);
 const scale=.69;
 let data='';for(let slot=0;slot<complicationCount();slot++)data+=instrument($('slot-'+slot).value,slot);
 content+=`<g transform="translate(150 150) scale(${scale}) translate(-150 -150)">${data}</g>`;
@@ -848,25 +729,25 @@ for(const id of ['time-accent','guides'])$(id).addEventListener('input',()=>rend
 $('complication-count').addEventListener('input',()=>{updateSlotPickers();render()});
 for(const id of ['date-format','preview-date'])$(id).addEventListener('input',()=>render());
 $('time-format').addEventListener('input',()=>render());
-$('shaded-middle').addEventListener('change',()=>render());
 $('time-style').addEventListener('input',()=>render());
 for(const id of ['center-source','history-window','graph-detail'])$(id).addEventListener('input',()=>render());
-$('weather-rain').addEventListener('input',()=>render());
+$('weather-rain').addEventListener('change',()=>render());
 for(const id of ['time-font','text-font'])$(id).addEventListener('input',()=>loadSelectedFonts());
-$('color-theme').addEventListener('input',()=>render());
+for(const id of ['accent-color','data-color'])$(id).addEventListener('input',()=>render());
 $('time-weight').addEventListener('input',()=>loadSelectedFonts());
 $('text-size').addEventListener('input',()=>render());
 $('layout').addEventListener('input',()=>render());
 $('show-seconds').addEventListener('change',()=>render());
+for(const id of ['seconds-length','seconds-thickness'])$(id).addEventListener('input',()=>render());
 for(const id of ['sample',...defaults.map((_,i)=>'slot-'+i)])$(id).addEventListener('input',()=>render());
 meta.insertAdjacentHTML('beforeend','<p style="font-size:12px;color:#71887a;margin-top:22px">All daily values are sample data. Data availability on the target watch needs verification before implementation.</p>');
 updateSlotPickers();
 loadSelectedFonts();
 
 const finishDescriptions = {
-  titanium: 'Brushed metal, a recessed dial, and warm luminous markers',
-  midnight: 'Black ceramic, a blue complication band, and crisp OLED accents',
-  amber: 'Amber phosphor, a warm case, and faint scanlines'
+  titanium: 'Brushed metal, a graphite dial, and chamfered hands',
+  midnight: 'Black dial, slim bar hands, and four cardinal marks',
+  amber: 'Stepped hands, ruler ticks, and a framed chart'
 };
 const finishButtons = document.querySelectorAll('[data-finish-choice]');
 finishButtons.forEach(button => button.addEventListener('click', () => {
@@ -874,5 +755,6 @@ finishButtons.forEach(button => button.addEventListener('click', () => {
   document.body.dataset.finish = finish;
   finishButtons.forEach(choice => choice.setAttribute('aria-pressed', choice === button));
   $('finish-description').textContent = finishDescriptions[finish];
+  render();
 }));
 </script></body></html>

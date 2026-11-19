@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="3">
+    <iq:application id="b9b433614f074a258ace504d84a292e7" type="watchface"
+        name="@Strings.AppName" entry="OrbitApp" launcherIcon="@Drawables.LauncherIcon"
+        minApiLevel="6.0.0">
+        <iq:products>
+            <iq:product id="fenix9pro47mm"/>
+        </iq:products>
+        <iq:permissions/>
+        <iq:languages>
+            <iq:language>eng</iq:language>
+        </iq:languages>
+        <iq:barrels/>
+    </iq:application>
+</iq:manifest>
