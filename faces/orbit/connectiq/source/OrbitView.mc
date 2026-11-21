@@ -58,7 +58,12 @@ class OrbitView extends WatchUi.WatchFace {
         var minuteColor = 0xE6EBE1;
         var dateColor = 0xC4C9BF;
         var finish = Application.Properties.getValue("Finish");
-        if (finish == 1) {
+        var classic = finish != 1 && finish != 2;
+        if (classic) {
+            centerColor = 0x0B0B0B;
+            hourColor = 0xA8FFCD;
+            minuteColor = hourColor;
+        } else if (finish == 1) {
             centerColor = 0x151E2B;
             midColor = 0x0D131D;
             edgeColor = 0x07090E;
@@ -74,41 +79,68 @@ class OrbitView extends WatchUi.WatchFace {
             minuteColor = hourColor;
         }
 
-        // Match the three stops in the browser mockup's radial gradient.
-        for (var step = 0; step < 19; step++) {
-            var color = step < 5
-                ? blendColor(edgeColor, midColor, step, 5)
-                : blendColor(midColor, centerColor, step - 5, 14);
-            fillDisk(dc, cx, cy, outer - step * scale, color);
+        var bandColor = centerColor;
+        var dataColor = classic ? 0x9BBDE0 : minuteColor;
+        if (classic) {
+            bandColor = 0x151515;
+            drawClassicDial(dc, cx, cy, scale, bandColor, centerColor);
+        } else {
+            for (var step = 0; step < 19; step++) {
+                var color = step < 5
+                    ? blendColor(edgeColor, midColor, step, 5)
+                    : blendColor(midColor, centerColor, step - 5, 14);
+                fillDisk(dc, cx, cy, outer - step * scale, color);
+            }
+            fillDisk(dc, cx, cy, inner, centerColor);
+            bandColor = finish == 1 ? 0x101C34 : 0x382513;
+            fillDisk(dc, cx, cy, 119 * scale, bandColor);
+            fillDisk(dc, cx, cy, 84 * scale, centerColor);
         }
-        fillDisk(dc, cx, cy, inner, centerColor);
-        var bandColor = finish == 1 ? 0x101C34 : (finish == 2 ? 0x382513 : 0x4A4E42);
-        fillDisk(dc, cx, cy, 119 * scale, bandColor);
-        fillDisk(dc, cx, cy, 84 * scale, centerColor);
 
-        for (var tick = 0; tick < 60; tick++) {
+        for (var tick = 0; tick < 60; tick += classic ? 5 : 1) {
             var angle = tick * Math.PI / 30;
-            var length = tick % 15 == 0 ? 5 : (tick % 5 == 0 ? 4 : 2);
-            var end = outer - 2 * scale;
+            var length = tick % 15 == 0 ? 4.8 : (tick % 5 == 0 ? 3.6 : 2.1);
+            var end = outer - 1.5 * scale;
             var start = end - length * scale;
-            dc.setColor(tick % 5 == 0 ? 0xBCBFB2 : 0x767C71, Graphics.COLOR_TRANSPARENT);
+            dc.setColor(classic ? blendColor(centerColor, hourColor, 2, 3)
+                : (tick % 5 == 0 ? 0xBCBFB2 : 0x767C71), Graphics.COLOR_TRANSPARENT);
             dc.setPenWidth(tick % 5 == 0 ? 2 : 1);
-            dc.drawLine(cx + start * Math.sin(angle), cy - start * Math.cos(angle),
-                cx + end * Math.sin(angle), cy - end * Math.cos(angle));
+            if (classic && tick % 15 == 0) {
+                var spread = 0.8 * Math.PI / 180;
+                drawRadialLine(dc, cx, cy, start, end, angle - spread);
+                drawRadialLine(dc, cx, cy, start, end, angle + spread);
+            } else {
+                drawRadialLine(dc, cx, cy, start, end, angle);
+            }
         }
 
         if (Application.Properties.getValue("ShowSeconds") == true) {
-            drawSecondsRail(dc, cx, cy, inner - 3 * scale, now.sec,
-                centerColor, minuteColor);
+            if (classic) {
+                drawHand(dc, cx, cy, outer - 13 * scale, outer - 5 * scale,
+                    1.4 * scale, now.sec * Math.PI / 30, hourColor, 2 * scale, 0.55);
+            } else {
+                drawSecondsRail(dc, cx, cy, inner - 3 * scale, now.sec, centerColor, minuteColor);
+            }
         }
 
         var minutes = now.min + now.sec / 60.0;
         var hourAngle = (now.hour % 12 + minutes / 60.0) * Math.PI / 6;
         var minuteAngle = minutes * Math.PI / 30;
-        drawHand(dc, cx, cy, inner, outer - 6 * scale, 4 * scale, hourAngle, hourColor);
-        drawHand(dc, cx, cy, inner, outer - 2.2 * scale, 2 * scale, minuteAngle, minuteColor);
+        drawHand(dc, cx, cy, inner, outer - 6 * scale, 4 * scale, hourAngle, hourColor, 4 * scale, 0.0);
+        drawHand(dc, cx, cy, inner, outer - 2.2 * scale, 2 * scale, minuteAngle, minuteColor, 5 * scale, 0.0);
 
-        var digits = Graphics.getVectorFont({:face => ["RobotoCondensedBold", "RobotoMedium"], :size => 40 * scale});
+        if (classic) {
+            dc.setColor(0xD3EDDE, Graphics.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            drawHandHighlight(dc, cx, cy, inner + scale, outer - 10 * scale, -2.5 * scale, hourAngle);
+            drawHandHighlight(dc, cx, cy, inner + scale, outer - 6.2 * scale, -scale, minuteAngle);
+        }
+
+        var timeSize = Application.Properties.getValue("TimeSize");
+        if (!(timeSize instanceof Number) || timeSize < 32 || timeSize > 48) {
+            timeSize = 40;
+        }
+        var digits = Graphics.getVectorFont({:face => ["RobotoCondensedBold", "RobotoMedium"], :size => timeSize * scale});
         var font = digits == null ? Graphics.FONT_NUMBER_MILD : digits;
         var dateFont = Graphics.getVectorFont({:face => "RobotoRegular", :size => 9 * scale});
         var readoutFont = Graphics.getVectorFont({:face => "RobotoRegular", :size => 10 * scale});
@@ -120,13 +152,16 @@ class OrbitView extends WatchUi.WatchFace {
         var gap = 3 * scale;
         var startX = cx - (hoursWidth + gap + minutesWidth) / 2;
         var justify = Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER;
+        var timeY = classic ? cy - 10 * scale - dc.getFontHeight(font) / 2 : cy - 24 * scale;
+        var dateY = classic ? timeY - dc.getFontHeight(font) / 2
+            - 8 * scale - dc.getFontHeight(smallFont) / 2 : cy - 49 * scale;
         dc.setColor(0xEDF2EF, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX, cy - 24 * scale, font, hoursText, justify);
+        dc.drawText(startX, timeY, font, hoursText, justify);
         dc.setColor(0xA5B2AA, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX + hoursWidth + gap, cy - 24 * scale, font, minutesText, justify);
+        dc.drawText(startX + hoursWidth + gap, timeY, font, minutesText, justify);
         dc.setColor(blendColor(centerColor, dateColor, 1, 2), Graphics.COLOR_TRANSPARENT);
         var date = Gregorian.info(moment, Time.FORMAT_MEDIUM);
-        dc.drawText(cx, cy - 49 * scale, smallFont,
+        dc.drawText(cx, dateY, smallFont,
             (date.day_of_week.toString() + " " + date.day.format("%d") + " " + date.month.toString()).toUpper(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
@@ -190,26 +225,27 @@ class OrbitView extends WatchUi.WatchFace {
                     fraction = battery == null ? 0.0 : battery / 100.0;
                 }
                 drawComplication(dc, cx, cy, scale, angle, spacing - 8, label, value,
-                    fraction, slot % 2 == 0 ? minuteColor : hourColor, bandColor, readoutFont);
+                    fraction, classic ? dataColor : (slot % 2 == 0 ? minuteColor : hourColor), bandColor, readoutFont, classic);
             }
         }
         if (Application.Properties.getValue("ShowCenterData") != false) {
             dc.setPenWidth(1);
             dc.setColor(blendColor(centerColor, dateColor, 1, 5), Graphics.COLOR_TRANSPARENT);
-            dc.drawLine(cx - 61 * scale, cy, cx + 61 * scale, cy);
+            var halfDivider = (classic ? 36 : 61) * scale;
+            dc.drawLine(cx - halfDivider, cy, cx + halfDivider, cy);
             if (centerSource == 1) {
-                drawHeartHistory(dc, cx, cy + 9 * scale, scale, heartSamples, minuteColor, centerColor, smallFont);
+                drawHeartHistory(dc, cx, cy + 9 * scale, scale, heartSamples, dataColor, centerColor, smallFont);
             } else {
                 drawStepMilestones(dc, cx, cy + 9 * scale, scale, steps, goal, progress,
-                    minuteColor, centerColor, smallFont);
+                    dataColor, centerColor, smallFont);
             }
         }
     }
 
     private function drawComplication(dc as Graphics.Dc, cx as Numeric, cy as Numeric,
         scale as Numeric, angle as Numeric, span as Numeric, label as String, value as String,
-        progress as Numeric, color as Number, bandColor as Number, font as Graphics.VectorFont?) as Void {
-        var radius = 110 * scale;
+        progress as Numeric, color as Number, bandColor as Number, font as Graphics.VectorFont?, classic as Boolean) as Void {
+        var radius = (classic ? 115 : 110) * scale;
         var start = (90 - angle + span / 2 + 360).toNumber() % 360;
         var end = start - span;
         var track = blendColor(bandColor, color, 1, 3);
@@ -231,7 +267,7 @@ class OrbitView extends WatchUi.WatchFace {
         var text = label + " " + value;
         var alignment = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
         if (font != null) {
-            dc.drawRadialText(cx, cy, font, text, alignment, textAngle, 96 * scale, direction);
+            dc.drawRadialText(cx, cy, font, text, alignment, textAngle, (classic ? 101 : 96) * scale, direction);
         } else {
             var radians = angle * Math.PI / 180;
             dc.drawText(cx + Math.sin(radians) * 96 * scale, cy - Math.cos(radians) * 96 * scale,
@@ -256,7 +292,7 @@ class OrbitView extends WatchUi.WatchFace {
             }
         }
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, y, font, "HEART RATE", Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x, y, font, "BPM", Graphics.TEXT_JUSTIFY_LEFT);
         dc.drawText(x + width, y, font, latest == 0 ? "--" : latest.format("%d") + " bpm",
             Graphics.TEXT_JUSTIFY_RIGHT);
         y += dc.getFontHeight(font) + 2;
@@ -294,7 +330,7 @@ class OrbitView extends WatchUi.WatchFace {
         var x = cx - width / 2;
         var unavailable = steps == null || goal == null || goal <= 0;
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, y, font, "STEP GOAL", Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x, y, font, "STEPS DAILY", Graphics.TEXT_JUSTIFY_LEFT);
         dc.drawText(x + width, y, font,
             unavailable ? "--" : (progress * 100).format("%.0f") + "%",
             Graphics.TEXT_JUSTIFY_RIGHT);
@@ -348,19 +384,52 @@ class OrbitView extends WatchUi.WatchFace {
         dc.fillCircle(cx, cy, radius);
     }
 
+    private function drawClassicDial(dc as Graphics.Dc, cx as Numeric, cy as Numeric,
+        scale as Numeric, bandColor as Number, centerColor as Number) as Void {
+        var radius = 121 * scale;
+        fillDisk(dc, cx, cy, radius, bandColor);
+        var tilt = -78 * Math.PI / 180;
+        var dx = Math.cos(tilt);
+        var dy = Math.sin(tilt);
+        dc.setPenWidth(1);
+        for (var grain = -42; grain <= 42; grain++) {
+            var offset = grain * 2.8 * scale;
+            var extent = Math.sqrt(radius * radius - offset * offset);
+            var x = cx - dy * offset;
+            var y = cy + dx * offset;
+            dc.setColor(grain % 2 == 0 ? 0x191919 : 0x121212, Graphics.COLOR_TRANSPARENT);
+            dc.drawLine(x - dx * extent, y - dy * extent, x + dx * extent, y + dy * extent);
+        }
+        fillDisk(dc, cx, cy, 93 * scale, centerColor);
+    }
+
+    private function drawHandHighlight(dc as Graphics.Dc, cx as Numeric, cy as Numeric,
+        start as Numeric, end as Numeric, offset as Numeric, angle as Numeric) as Void {
+        drawRadialLine(dc, cx + Math.cos(angle) * offset, cy + Math.sin(angle) * offset,
+            start, end, angle);
+    }
+
+    private function drawRadialLine(dc as Graphics.Dc, cx as Numeric, cy as Numeric,
+        start as Numeric, end as Numeric, angle as Numeric) as Void {
+        var dx = Math.sin(angle);
+        var dy = -Math.cos(angle);
+        dc.drawLine(cx + start * dx, cy + start * dy, cx + end * dx, cy + end * dy);
+    }
+
     private function drawHand(dc as Graphics.Dc, cx as Numeric, cy as Numeric,
         start as Numeric, end as Numeric, width as Numeric, angle as Numeric,
-        color as Number) as Void {
+        color as Number, bevel as Numeric, tipWidthRatio as Numeric) as Void {
         var dx = Math.sin(angle);
         var dy = -Math.cos(angle);
         var px = -dy * width;
         var py = dx * width;
-        var shoulder = end - width * 1.5;
+        var shoulder = end - bevel;
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.fillPolygon([
             [cx + dx * start - px, cy + dy * start - py],
             [cx + dx * shoulder - px, cy + dy * shoulder - py],
-            [cx + dx * end, cy + dy * end],
+            [cx + dx * end - px * tipWidthRatio, cy + dy * end - py * tipWidthRatio],
+            [cx + dx * end + px * tipWidthRatio, cy + dy * end + py * tipWidthRatio],
             [cx + dx * shoulder + px, cy + dy * shoulder + py],
             [cx + dx * start + px, cy + dy * start + py]
         ]);

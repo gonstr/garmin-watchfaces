@@ -12,13 +12,14 @@
         <property id="Slot4" type="number">3</property>
         <property id="Slot5" type="number">4</property>
         <property id="Slot6" type="number">5</property>
+        <property id="TimeSize" type="number">40</property>
     </properties>
     <strings>
         <string id="FinishTitle">Finish</string>
-        <string id="TitaniumFinish">Brushed titanium</string>
+        <string id="TitaniumFinish">Classic</string>
         <string id="MidnightFinish">Midnight OLED</string>
         <string id="AmberFinish">Amber instrument</string>
-        <string id="ShowSecondsTitle">Show seconds rail</string>
+        <string id="ShowSecondsTitle">Show seconds indicator</string>
         <string id="ShowComplicationsTitle">Show battery and steps</string>
         <string id="ShowCenterDataTitle">Show center graph</string>
         <string id="ComplicationCountTitle">Complication count</string>
@@ -42,6 +43,7 @@
         <string id="Slot4Title">Complication 4</string>
         <string id="Slot5Title">Complication 5</string>
         <string id="Slot6Title">Complication 6</string>
+        <string id="TimeSizeTitle">Time size</string>
     </strings>
     <settings>
         <setting propertyKey="@Properties.Finish" title="@Strings.FinishTitle">
@@ -134,6 +136,9 @@
                 <listEntry value="4">@Strings.Source4</listEntry>
                 <listEntry value="5">@Strings.Source5</listEntry>
             </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.TimeSize" title="@Strings.TimeSizeTitle">
+            <settingConfig type="numeric" min="32" max="48"/>
         </setting>
     </settings>
 </resources>

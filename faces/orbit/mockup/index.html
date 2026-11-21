@@ -131,9 +131,6 @@ body[data-finish="titanium"] .watch::after { border: 1px solid #ebeee575; }
   border-color: #000;
   box-shadow: none;
 }
-body[data-finish="titanium"] #orbit {
-  background: radial-gradient(circle, #171717 0%, #111 64%, #080808 84%, #000 100%);
-}
 body[data-finish="midnight"] .watch {
   background: #181818;
   box-shadow: 0 18px 35px #000b, inset 0 0 0 1px #555, inset 0 0 0 4px #222;
@@ -151,16 +148,29 @@ body[data-finish="amber"] #orbit { background: #101010; }
 #orbit .dial-tick { opacity: .68; }
 #orbit .minor-tick { opacity: .34; }
 body[data-finish="titanium"] #orbit .dial-tick { stroke-linecap: round; }
-body[data-finish="titanium"] #orbit .quarter-tick { stroke-width: 1.45; }
-body[data-finish="midnight"] #orbit .dial-tick { stroke-linecap: round; stroke-width: .75; }
-body[data-finish="midnight"] #orbit .metric-arc { stroke-width: 2; }
+body[data-finish="titanium"] #orbit .hour-tick,
+body[data-finish="titanium"] #orbit .quarter-tick { stroke-width: 1.75; opacity: .9; }
+#orbit .classic-index-mount { fill: url(#classic-metal); stroke: #131313; stroke-width: .35; }
+#orbit .classic-index-light { stroke: currentColor; stroke-width: .8; stroke-linecap: round; }
+#orbit .classic-hand-bevel { fill: url(#classic-hand-light); }
+#orbit .minimal-orbit-dot { fill: currentColor; opacity: .40; }
+#orbit .instrument-scale { fill: none; stroke: currentColor; stroke-width: .6; opacity: .33; }
+#orbit .hand-inlay { fill: none; stroke: #fff; stroke-width: .55; opacity: .46; }
+body[data-finish="midnight"] #orbit .dial-tick { stroke-linecap: round; stroke-width: .9; }
+body[data-finish="midnight"] #orbit .quarter-tick { stroke-width: 2.1; opacity: .9; }
+body[data-finish="midnight"] #orbit .instrument .track,
+body[data-finish="midnight"] #orbit .instrument .metric-arc { stroke-width: 2.6; }
 body[data-finish="midnight"] #orbit .instrument .lit { r: 2.7; }
 body[data-finish="amber"] #orbit .dial-tick,
 body[data-finish="amber"] #orbit .instrument .metric-arc,
 body[data-finish="amber"] #orbit .instrument .track { stroke-linecap: butt; }
 body[data-finish="amber"] #orbit .hour-tick,
 body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
-#orbit .chart-frame { fill: none; stroke: currentColor; opacity: .25; stroke-width: .55; }
+#orbit .needle-inset { stroke: #111; opacity: .65; }
+#orbit .instrument-reference path { stroke: currentColor; opacity: .55; stroke-linecap: butt; }
+#orbit .instrument-goal-mark { stroke: currentColor; stroke-width: 1; opacity: .8; }
+#orbit .instrument-chart-reference { stroke: currentColor; stroke-width: .65; opacity: .3; }
+#orbit .instrument-reference-label { fill: currentColor; font-size: 5.5px; opacity: .65; }
 #orbit .center-complication { color: var(--theme-graph); }
 #orbit .sun-arch, #orbit .sun-noon, #orbit .sun-elapsed { stroke: currentColor; }
 #orbit .sun-marker { fill: currentColor; }
@@ -194,6 +204,12 @@ body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
 #orbit .seconds-rail { color: var(--theme-second); }
 #orbit .second-active { fill: currentColor; }
 </style>
+<style>
+#orbit #center-date-row text { font-size: 15px; font-weight: 500; opacity: .9; }
+#orbit .icon-value { opacity: .95; }
+#orbit text.curved-value, #orbit text.rim-text { font-weight: 500; }
+#orbit #center-readout text { fill: var(--theme-graph); font: 500 16px var(--watch-font); }
+</style>
 </head>
 <body data-finish="titanium"><main>
 <div class="eyebrow">Lumen / Orbit · study 02</div>
@@ -204,7 +220,7 @@ body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
   <button type="button" data-finish-choice="titanium" aria-pressed="true">Classic</button>
   <button type="button" data-finish-choice="midnight" aria-pressed="false">Minimal</button>
   <button type="button" data-finish-choice="amber" aria-pressed="false">Instrument</button>
-  <p id="finish-description" aria-live="polite">Brushed metal, a graphite dial, and chamfered hands</p>
+  <p id="finish-description" aria-live="polite">Brushed case, polished indices, and beveled hands</p>
 </div>
 
 <label class="control">LAYOUT <select id="layout" aria-label="Watch layout comparison"><option value="dense" selected>Expanded core · outer time</option><option value="previous">Previous · outer complications</option></select></label>
@@ -218,17 +234,14 @@ body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
 <label class="control">HAND LENGTH <input id="seconds-length" type="range" min="4" max="11" value="8" step=".5"></label>
 <label class="control">HAND WIDTH <input id="seconds-thickness" type="range" min="1.4" max="4" value="2.8" step=".2"></label></div>
 <label class="control">COMPLICATION GUIDES <select id="guides" aria-label="Complication guide detail"><option value="bare">Tracks only</option><option value="bare-icons" selected>Tracks + readouts</option><option value="ticks">Tracks + ticks</option><option value="full">Tracks + ticks + readouts</option></select></label>
-<label class="control">COMPLICATIONS <select id="complication-count" aria-label="Number of complications"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option></select></label>
-<label class="control">TIME FONT <select id="time-font" aria-label="Time digit font"><option value="mono">Mono · Menlo</option><option value="sans">Clean · Helvetica</option><option value="rounded">Rounded · Avenir</option><option value="roboto" selected>Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
-<label class="control">TIME WEIGHT <select id="time-weight" aria-label="Time font weight"><option value="300">Light</option><option value="400">Regular</option><option value="500">Medium</option><option value="600" selected>Semibold</option><option value="700">Bold</option><option value="800">Heavy</option></select></label>
+<label class="control">COMPLICATIONS <select id="complication-count" aria-label="Number of complications"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option></select></label>
+<label class="control">TIME FONT <select id="time-font" aria-label="Time digit font"><option value="mono">Mono · Menlo</option><option value="sans">Clean · Helvetica</option><option value="rounded">Rounded · Avenir</option><option value="roboto">Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" selected title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
+<label class="control">TIME SIZE <input id="time-size" type="range" min="62" max="94" value="82" step="1" aria-label="Center time size"> <output id="time-size-value" for="time-size">82</output></label>
+<label class="control">TIME WEIGHT <select id="time-weight" aria-label="Time font weight"><option value="300">Light</option><option value="400">Regular</option><option value="500">Medium</option><option value="600">Semibold</option><option value="700" selected>Bold</option><option value="800">Heavy</option></select></label>
 <label class="control">TEXT FONT <select id="text-font" aria-label="Font for date, complications, and guide text"><option value="sans">Clean · Helvetica</option><option value="mono">Mono · Menlo</option><option value="rounded">Rounded · Avenir</option><option value="roboto" selected>Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
-<label class="control">OUTER TEXT SIZE <input id="text-size" type="range" min="7" max="12" value="11" step=".5" aria-label="Outer complication and guide text size"></label>
+<label class="control">OUTER TEXT SIZE <input id="text-size" type="range" min="9" max="18" value="15" step=".5" aria-label="Outer complication and guide text size"></label>
 <label class="control">TIME STYLE <select id="time-style" aria-label="Time digit fill style"><option value="outline-minutes">Solid hours / outlined minutes</option><option value="solid" selected>Solid time</option></select></label>
-<label class="control">CENTER DATA <select id="center-source" aria-label="Center complication source"></select></label>
-<label class="control">PLOT DETAIL <select id="graph-detail" aria-label="Graph annotation detail"><option value="minimal" selected>Minimal</option><option value="axes">Show labels / axes</option></select></label>
-<label class="control">HISTORY <select id="history-window" aria-label="Graph history window"><option value="1">1 hour</option><option value="6" selected>6 hours</option><option value="24">24 hours</option></select></label>
-<label class="control"><input id="weather-rain" type="checkbox" checked> Sample rain forecast</label>
-<output id="center-description" class="control"></output>
+<label class="control">CENTER READOUT <select id="center-source" aria-label="Center complication source"></select></label>
 <label class="control">SAMPLE <input id="sample" type="range" min="0" max="100" value="62" aria-label="Sample data variation"></label>
 <label class="control">TIME FORMAT <select id="time-format" aria-label="Time format"><option value="24">24-hour</option><option value="12">12-hour AM/PM</option></select></label>
 <label class="control">DATE FORMAT <select id="date-format" aria-label="Date format"><option value="weekday-date">Weekday + day + month</option><option value="day-month">Day + month</option><option value="numeric">DD/MM/YYYY</option><option value="iso">YYYY-MM-DD</option></select></label>
@@ -280,13 +293,13 @@ document.querySelectorAll('.concept').forEach(c=>c.dataset.choice=c.dataset.name
 <script>
 let seconds=18,playing=true;
 const sources={body:'Body Battery · level',steps:'Steps · goal',daylight:'Daylight · interval',weather:'Weather · temperature + rain',range:'HRV · illustrative range',recovery:'Recovery · countdown',trend:'Heart rate · current value',status:'Training · category',date:'Date · text only',weekday:'Weekday · text only',message:'Custom text · text only',missing:'Unavailable data'};
-const graphSources={weather:'Weather · temperature + rain',daylight:'Daylight',stress:'Stress',trend:'Heart rate',body:'Body Battery',steps:'Steps',calories:'Calories',distance:'Distance',range:'HRV',pressure:'Barometric pressure'};
-$('center-source').innerHTML=Object.entries(graphSources).map(([key,name])=>`<option value="${key}">${name}</option>`).join('');
-const defaults=['body','weather','steps','recovery','daylight','range'];
-const positions=['Slot 1','Slot 2','Slot 3','Slot 4','Slot 5','Slot 6'];
+const readoutSources={trend:'Heart rate',weather:'Temperature',daylight:'Daylight',stress:'Stress',body:'Body Battery',steps:'Steps',calories:'Calories',distance:'Distance',range:'HRV',pressure:'Barometric pressure'};
+$('center-source').innerHTML=Object.entries(readoutSources).map(([key,name])=>`<option value="${key}">${name}</option>`).join('');
+const defaults=['body','weather','steps','recovery'];
+const positions=['Slot 1','Slot 2','Slot 3','Slot 4'];
 const selectorPanel=document.createElement('section');selectorPanel.className='slot-pickers';selectorPanel.setAttribute('aria-label','Complication sources');selectorPanel.innerHTML=defaults.map((v,i)=>`<label class="slot-picker"><span><b>${i+1}</b> ${positions[i]}</span><select id="slot-${i}" aria-label="${positions[i]} complication source">${Object.entries(sources).map(([key,label])=>`<option value="${key}" ${key===v?'selected':''}>${label}</option>`).join('')}</select></label>`).join('');document.querySelectorAll('.meta')[1].appendChild(selectorPanel);
 function arcPath(radius,start,end){const a=point(radius,start),b=point(radius,end);return `M${a} A${radius} ${radius} 0 ${end-start>180?1:0} 1 ${b}`}
-function complicationCount(){return Math.min(6,Math.max(2,Number($('complication-count').value)||4))}
+function complicationCount(){return Math.min(4,Math.max(2,Number($('complication-count').value)||4))}
 function applyGlow(){const value=Number($('glow').value),style=document.documentElement.style;style.setProperty('--blur',value+'px');style.setProperty('--hand-glow-filter',value<=0?'none':`drop-shadow(0 0 ${Math.min(.65,value*.08)}px currentColor)`);style.setProperty('--glow-filter',value<=0?'none':`drop-shadow(0 0 ${value*.3}px currentColor)`)}
 function applyColors(){
   const accent = $('accent-color').value;
@@ -300,14 +313,13 @@ function applyColors(){
   style.setProperty('--theme-rain', '#80bdff');
 }
 const fontFamilies={roboto:'"Watch Roboto", sans-serif','roboto-condensed':'"Watch Roboto Condensed", sans-serif','bionic-approx':'"Watch Barlow", sans-serif',mono:'Menlo, ui-monospace, monospace',sans:'"Helvetica Neue", Arial, sans-serif',rounded:'"Avenir Next", "Trebuchet MS", sans-serif',condensed:'"DIN Condensed", "Arial Narrow", sans-serif',technical:'"Courier New", monospace',serif:'Georgia, serif'};
-const CENTER_SIZES={time:40,date:9,value:12,graphWidth:110,graphHeight:20};
-function textSize(){return Math.min(12,Math.max(7,Number($('text-size').value)||10))}
+function textSize(){return Math.min(18,Math.max(9,Number($('text-size').value)||15))}
 let fontsLoading=false,fontLoadGeneration=0;
 async function loadSelectedFonts(){
 const generation=++fontLoadGeneration;fontsLoading=true;
 try{
 await Promise.all([
-document.fonts.load(`${$('time-weight').value} ${CENTER_SIZES.time}px ${fontFamilies[$('time-font').value]}`,'0123456789'),
+document.fonts.load(`${$('time-weight').value} ${$('time-size').value}px ${fontFamilies[$('time-font').value]}`,'0123456789'),
 document.fonts.load(`400 ${textSize()}px ${fontFamilies[$('text-font').value]}`,'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ°'),
 document.fonts.load(`500 ${textSize()}px ${fontFamilies[$('text-font').value]}`,'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ°')
 ]);
@@ -319,7 +331,18 @@ function applyFonts(){document.documentElement.style.setProperty('--time-font',f
 let textMeasureContext;
 function watchTextWidth(value,size,weight=400){if(textMeasureContext===undefined){const canvas=document.createElement('canvas');textMeasureContext=typeof canvas.getContext==='function'?canvas.getContext('2d'):null}if(!textMeasureContext)return value.length*size*.6;textMeasureContext.font=`${weight} ${size}px ${fontFamilies[$('text-font').value]||fontFamilies.sans}`;return textMeasureContext.measureText(value).width}
 function denseLayout(){return $('layout').value==='dense'}
-function sectorGeometry(slot){const count=complicationCount(),step=360/count,center=(count===2?0:-step/2)+slot*step,span=step-8;return {center,span,start:center-span/2,end:center+span/2};}
+function sectorGeometry(slot){
+  const count=complicationCount();
+  const upper=Math.ceil(count/2);
+  const top=slot<upper;
+  const rowCount=top?upper:count-upper;
+  const rowSlot=top?slot:count-1-slot;
+  const rowCenter=top?0:180;
+  const step=118/rowCount;
+  const center=rowCenter-59+step*(rowSlot+.5);
+  const span=step-7;
+  return {center,span,start:center-span/2,end:center+span/2,rowCount};
+}
 function reverseText(start,end){const center=(((start+end)/2)%360+360)%360;return center>90&&center<270}
 function updateSlotPickers(){document.querySelectorAll('.slot-picker').forEach((picker,i)=>{picker.hidden=i>=complicationCount()})}
 function selectedDate(){const d=new Date(($('preview-date').value||'2026-11-15')+'T12:00:00');return {short:d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}).toUpperCase(),day:d.toLocaleDateString('en-GB',{weekday:'short'}).toUpperCase(),longDay:d.toLocaleDateString('en-GB',{weekday:'long'}).toUpperCase()}}
@@ -344,34 +367,45 @@ missing:'<circle r="6"/><path d="M-4 4 L4 -4"/>'};
 function curvedIconValue(source,value,slot,r,start,end){
 value=complicationText(value);
 const reverse=reverseText(start,end),length=(end-start)*Math.PI/180*r;
-const fontSize=textSize()/.69,iconWidth=fontSize,gap=fontSize*.4;
-const size=watchTextWidth(value,fontSize),offset=Math.max(0,(length-size-iconWidth-gap)/2);
+const preferred=textSize()/.69;
+const preferredWidth=watchTextWidth(value,preferred,500)+preferred*1.4;
+const fontSize=preferred*Math.min(1,(length-6)/preferredWidth);
+const iconWidth=fontSize,gap=fontSize*.4;
+const size=watchTextWidth(value,fontSize,500),offset=(length-size-iconWidth-gap)/2;
 const direction=reverse?-1:1,first=reverse?end:start;
 const angle=first+direction*(offset+iconWidth/2)/r*180/Math.PI;
 const pos=point(r,angle),a=point(r,first),b=point(r,reverse?start:end),id='icon-value-path-'+slot;
 const icon=watchIcons[source]||watchIcons.date;
-return `<g class="icon-value"><defs><path id="${id}" d="M${a} A${r} ${r} 0 0 ${reverse?0:1} ${b}"/></defs><g class="data-icon" transform="translate(${pos[0]} ${pos[1]}) rotate(${reverse?angle-180:angle}) scale(${iconWidth/14})" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${icon}</g><text class="curved-value" dy="${fontSize*.3}"><textPath href="#${id}" startOffset="${offset+iconWidth+gap}">${value}</textPath></text></g>`;
+return `<g class="icon-value"><defs><path id="${id}" d="M${a} A${r} ${r} 0 0 ${reverse?0:1} ${b}"/></defs><g class="data-icon" transform="translate(${pos[0]} ${pos[1]}) rotate(${reverse?angle-180:angle}) scale(${iconWidth/14})" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${icon}</g><text class="curved-value" style="font-size:${fontSize}px" dy="${fontSize*.3}"><textPath href="#${id}" startOffset="${offset+iconWidth+gap}">${value}</textPath></text></g>`;
 }
+function complicationRadius(){return denseLayout() ? 115 : 139;}
 function instrument(source,slot){
- const {center,span,start,end}=sectorGeometry(slot);
- // Outer complication tracks and ticks stay inside the display edge;
- // their inset labels stay clear of the inner time markers.
- const arcRadius=denseLayout()?115:139;
+ const {span,start,end,rowCount}=sectorGeometry(slot);
+ // Readouts follow the inside of the complication tracks.
+ const arcRadius=complicationRadius();
  const r=arcRadius/.69;
- const labelRadius=(arcRadius-(denseLayout()?14:18))/.69;
- const [x,y]=point(113,center);
+ const labelInset=(denseLayout()?16:20)+(rowCount===1?3:0);
+ const labelRadius=(arcRadius-labelInset)/.69;
  const p=Number($('sample').value)/100;
  const arc=(r,a,b,cls='track',width=2)=>`<path class="${cls}" d="${arcPath(r,a,b)}" fill="none" stroke="currentColor" stroke-width="${width}" stroke-linecap="round"/>`;
- const dot=(fraction,size=denseLayout()?4.5:3)=>{let pos=point(r,start+(end-start)*fraction);return `<circle class="lit" cx="${pos[0]}" cy="${pos[1]}" r="${size}" fill="currentColor"/>`};
- let shape=arc(r,start,end),value='',label='',detail='',fraction=p;
- if(!['bare','bare-icons'].includes($('guides').value)){
+ const finish=document.body.dataset.finish;
+ const dot=(fraction,size=denseLayout()?4.5:3)=>{
+   const angle=start+span*fraction;
+   if(finish==='amber')return line(r-4,r+4,angle,true,1.65);
+   const pos=point(r,angle);return `<circle class="lit" cx="${pos[0]}" cy="${pos[1]}" r="${size}" fill="currentColor"/>`};
+ const showReadouts=['bare-icons','full'].includes($('guides').value);
+ const plainWeather=finish==='amber' && source==='weather';
+ let shape=plainWeather && showReadouts ? '' : arc(r,start,end);
+
+ let value='',label='',detail='',fraction=p;
+ if(!plainWeather && !['bare','bare-icons'].includes($('guides').value)){
  shape+='<g class="complication-ticks">';
  for(let i=0;i<=10;i++)shape+=line(r+4,i%5===0?r+10:r+7,start+i*span/10,false,.8);
  shape+='</g>';
  }
  switch(source){
  case 'body':value=Math.round(p*100);label='BODY';detail='BATTERY';shape+=arc(r,start,start+span*p,'metric-arc',3)+dot(p);break;
- case 'steps':value=(Math.round(p*12500/10)*10).toLocaleString('en-US');label='STEPS';detail='10K GOAL';fraction=Math.min(p*1.25,1);shape+=arc(r,start,start+span*fraction,'metric-arc',3)+line(r-8,r+4,end,true,1.5)+dot(fraction);break;
+ case 'steps':value=(Math.round(p*12500/10)*10).toLocaleString('en-US');label='STEPS';detail='10K GOAL';fraction=Math.min(p*1.25,1);shape+=arc(r,start,start+span*fraction,'metric-arc',3)+(finish==='amber'?'':line(r-8,r+4,end,true,1.5))+dot(fraction);break;
  case 'daylight':{const [hh,mm]=$('time').value.split(':').map(Number),day=hh+mm/60;value='9h 18';label='DAYLIGHT';detail='07:12–16:30';shape+=arc(r,start+span*.3,start+span*.6875,'range-band',5)+dot(day/24);break;}
  case 'weather':value=weatherTemperatures()[Number($('time').value.split(':')[0])]+'°';label='PARTLY CLOUDY';detail='TEMPERATURE';break;
  case 'range':value=Math.round(20+p*80);label='HRV';detail='48–72 MS';shape+=arc(r,start+span*.35,start+span*.65,'range-band',6)+dot(p);break;
@@ -387,41 +421,26 @@ function instrument(source,slot){
  if(textOnly){
  const text=complicationText(source==='date'?selectedDate().day+' '+selectedDate().short:source==='missing'?'NO DATA':value);
  const reverse=reverseText(start,end);
- const a=point(r,reverse?end:start),b=point(r,reverse?start:end);
+ const a=point(labelRadius,reverse?end:start),b=point(labelRadius,reverse?start:end);
  const id='complication-text-'+slot;
- shape=`<defs><path id="${id}" d="M${a} A${r} ${r} 0 0 ${reverse?0:1} ${b}"/></defs><text class="rim-text" dy="3"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${text}</textPath></text>`;
+ shape=`<defs><path id="${id}" d="M${a} A${labelRadius} ${labelRadius} 0 0 ${reverse?0:1} ${b}"/></defs><text class="rim-text" dy="3"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${text}</textPath></text>`;
  }
  if(['bare-icons','full'].includes($('guides').value)){
  const display=source==='date'?selectedDate().day+' '+selectedDate().short:source==='missing'?'NO DATA':value;
- const guide=curvedIconValue(source,display,slot,textOnly?r:labelRadius,start,end);
+ const guide=curvedIconValue(source,display,slot,labelRadius,start,end);
  shape=textOnly?guide:shape+guide;
+ }
+ if(finish==='amber' && source==='body'){
+   const marks=[.25,.5,.75].map(t=>line(r+2,r+(t===.5?7:5),start+span*t,false,.9)).join('');
+   shape+=`<g class="instrument-reference"><title>Battery quarter marks</title>${marks}</g>`;
+ } else if(finish==='amber' && source==='steps'){
+   const goalStart=point(r-6,end), goalEnd=point(r+6,end);
+   shape+=`<path class="instrument-goal-mark" d="M${goalStart} L${goalEnd}"><title>10,000-step goal</title></path>`;
  }
  return `<g class="instrument" style="color:var(--theme-graph);--finish-accent:var(--theme-graph)" aria-label="${label}: ${value}. ${detail}"><title>${label}: ${value}. ${detail}</title>${shape}</g>`;
 }
 const meta=document.querySelectorAll('.meta')[1];
-function centerData(){
-const source=$('center-source').value,p=Number($('sample').value)/100,hours=Number($('history-window').value);
-if(source==='daylight')return {source,title:'DAYLIGHT'};
-if(source==='weather'){const temperatures=weatherTemperatures(),hour=Number($('time').value.split(':')[0]);return {source,title:'TEMPERATURE °C',value:temperatures[hour],unit:'°',history:temperatures,min:Math.floor((Math.min(...temperatures)-1)/10)*10,max:Math.ceil((Math.max(...temperatures)+1)/10)*10,bars:true,rain:Array.from({length:24},(_,h)=>$('weather-rain').checked&&h>=11&&h<=19?Math.round(65*Math.sin((h-10)*Math.PI/10)):0),hours:24,hour}}
-const models={stress:{title:'STRESS',value:Math.round(p*100),unit:'',min:0,max:100,bars:true},trend:{title:'HEART RATE',value:Math.round(52+p*40),unit:'bpm',min:40,max:130},body:{title:'BODY BATTERY',value:Math.round(p*100),unit:'',min:0,max:100},steps:{title:'STEPS',value:Math.round(p*12500/10)*10,unit:'steps',min:0,max:Math.max(10000,p*12500),cumulative:true},calories:{title:'CALORIES',value:Math.round(900+p*1800),unit:'kcal',min:0,max:3000,cumulative:true},distance:{title:'DISTANCE',value:Math.round(p*150)/10,unit:'km',min:0,max:15,cumulative:true},range:{title:'HRV',value:Math.round(20+p*80),unit:'ms',min:20,max:100,low:48,high:72},pressure:{title:'PRESSURE',value:Math.round(1000+p*25),unit:'hPa',min:990,max:1040}};
-const data={...(models[source]||models.stress),source,hours};
-data.history=Array.from({length:37},(_,i)=>{const t=i/36;let value=data.value;if(source==='body')value=data.value+(1-t)*(16+19*Math.sin(t*9+Math.log2(hours)*.35));else value=data.value+(Math.sin(i*.55+hours*.2)*.14+Math.sin(i*1.3)*.06)*(data.max-data.min)*(1-t);return Math.max(data.min,Math.min(data.max,value))});
-return data;
-}
-function scaledGraphData(data){
-// Bounded levels retain their natural scales. Other histories use the
-// observed range with padding, including any personal reference band.
-if(!['trend','pressure'].includes(data.source))return data;
-const values=[...data.history,data.value];
-let min=Math.min(...values),max=Math.max(...values);
-const minimumSpan=data.source==='trend'?24:10;
-const span=Math.max(max-min,minimumSpan),mid=(min+max)/2;
-min=mid-span*.62;max=mid+span*.62;
-const step=data.source==='trend'?5:1;
-return {...data,min:Math.max(0,Math.floor(min/step)*step),max:Math.ceil(max/step)*step};
-}
-const dailyGoals = {steps: 10000, calories: 2400, distance: 10};
-const sampleSun = {rise: 7 * 60 + 12, noon: 11 * 60 + 51, set: 16 * 60 + 30};
+const sampleSun = {rise: 7 * 60 + 12, set: 16 * 60 + 30};
 
 function previewMinutes(){
   const [hour, minute] = $('time').value.split(':').map(Number);
@@ -439,134 +458,23 @@ function daylightReadout(now){
   return Math.floor(remaining / 60) + 'h ' + String(remaining % 60).padStart(2, '0') + 'm';
 }
 
-function renderInstrumentPlot(data, x, top, width, height, detail){
-  const bottom = top + height;
-  const now = previewMinutes();
-  const right = x + width;
-  // Reserve the bottom of the same plot box for optional annotations.
-  const floor = bottom - (detail ? 7 : 1);
-  const label = (text, px, anchor) => `<text class="plot-label" x="${px}" y="${bottom}" text-anchor="${anchor}">${text}</text>`;
-  const title = text => `<title>${text}</title>`;
-  if(data.source === 'daylight'){
-    const {rise, noon, set} = sampleSun;
-    const day = now >= rise && now < set;
-    const progress = now >= set ? 1 : Math.max(0, (now - rise) / (set - rise));
-    // Parabola expressed as a quadratic Bézier, including its exact prefix.
-    const inset = 4, span = width - inset * 2, lift = (floor - top - 3) * 2;
-    const left = x + inset, sunX = left + progress * span;
-    const arcY = t => floor - 2 * lift * t * (1 - t);
-    const noonX = left + span * (noon - rise) / (set - rise);
-    const noonY = arcY((noon - rise) / (set - rise));
-    const next = (now >= set ? 'Tomorrow' : 'Today') + ' at ' + clockLabel(rise);
-    return {type:'sun-track', value:daylightReadout(now), description:day ? 'Daylight remaining until ' + clockLabel(set) : 'Next sunrise: ' + next, plot:
-      `<path class="sun-arch" d="M${left} ${floor} Q${left + span / 2} ${floor - lift} ${right - inset} ${floor}"/>
-       <path class="sun-noon" d="M${noonX} ${noonY - 2} v4"/>
-       ${day ? `<path class="sun-elapsed" d="M${left} ${floor} Q${left + progress * span / 2} ${floor - progress * lift} ${sunX} ${arcY(progress)}"/><circle class="sun-marker" cx="${sunX}" cy="${arcY(progress)}" r="2.6"/>` : ''}
-       ${detail ? label(clockLabel(rise), x, 'start') + label(clockLabel(set), right, 'end') : ''}`};
-  }
-
-  if(data.source === 'weather'){
-    const count = 8;
-    const step = width / count;
-    const patterns = [5, 4, 3].map((spacing, i) => `<pattern id="forecast-rain-${i}" patternUnits="userSpaceOnUse" width="${spacing}" height="${spacing}" patternTransform="rotate(35)"><path d="M0 0 V${spacing}" stroke="#82bbff" stroke-width="1.5"/></pattern>`).join('');
-    const tiles = Array.from({length:count}, (_, i) => {
-      const hour = (data.hour + i) % 24;
-      const temp = data.history[hour], chance = data.rain[hour];
-      const size = 3 + (floor - top - 3) * (temp - data.min) / (data.max - data.min);
-      const geometry = `x="${x + i * step}" y="${floor - size}" width="${step - 1}" height="${size}" rx=".8"`;
-      const wet = chance ? `<rect ${geometry} fill="url(#forecast-rain-${chance < 30 ? 0 : chance < 60 ? 1 : 2})"/>` : '';
-      return `<g>${title(clockLabel(hour * 60) + ': ' + temp + '°C, ' + chance + '% rain chance')}<rect class="forecast-tile${i === 0 ? ' forecast-current' : ''}" ${geometry}/>${wet}</g>`;
-    }).join('');
-    return {type:'forecast-ribbon', description:'Eight hourly tiles from the current hour. Height shows temperature; denser blue hatching shows greater rain chance.', plot:
-      `<defs>${patterns}</defs>${tiles}${detail ? label('NOW',x,'start') + label(clockLabel((data.hour + count - 1) * 60),right,'end') : ''}`};
-  }
-
-  const goal = dailyGoals[data.source];
-  if(goal){
-    const progress = Math.min(1, data.value / goal);
-    const over = Math.round((data.value - goal) * 10) / 10;
-    const format = value => value.toLocaleString('en-US') + (data.source === 'steps' ? '' : ' ' + data.unit);
-    const step = width / 10;
-    const y = top + 2, barHeight = floor - y;
-    const segments = Array.from({length:10}, (_, i) => {
-      const px = x + i * step + (i >= 5 ? 1 : 0);
-      const barWidth = step - (i === 4 ? 2.4 : 1.4);
-      const fill = Math.max(0, Math.min(1, progress * 10 - i));
-      return `<rect class="milestone-track" x="${px}" y="${y}" width="${barWidth}" height="${barHeight}" rx="1"/>
-        ${fill ? `<rect class="milestone-fill${i === 9 && progress === 1 ? ' goal-reached' : ''}" x="${px}" y="${y}" width="${barWidth * fill}" height="${barHeight}" rx="1"/>` : ''}`;
-    }).join('');
-    return {type:'milestones', value:over > 0 ? '+' + format(over) : format(data.value),
-      description:format(data.value) + ' of ' + format(goal) + (over > 0 ? ' · above goal by ' + format(over) : ''),
-      plot:segments + (detail ? label('0',x,'start') + label('GOAL ' + format(goal),right,'end') : '')};
-  }
-
-  if(data.source === 'range'){
-    const nights = [-9, 2, 7, -5, -1, 5, 0].map(offset => Math.max(0, data.value + offset));
-    const low = Math.min(...nights, data.low) - 6;
-    const high = Math.max(...nights, data.high) + 6;
-    const py = value => floor - 2 - (floor - top - 4) * (value - low) / (high - low);
-    const markers = nights.map((value, i) => {
-      const latest = i === nights.length - 1;
-      const cx = x + 3 + i * (width - 6) / (nights.length - 1);
-      return `<circle class="night-dot${latest ? ' latest-night' : ''}" cx="${cx}" cy="${py(value)}" r="${latest ? 2.4 : 1.55}">${title((latest ? 'Latest' : (6-i) + ' nights ago') + ': ' + value + ' ms')}</circle>`;
-    }).join('');
-    return {type:'range-strip', description:'Seven sample nights. Usual range: ' + data.low + '–' + data.high + ' ms; latest dot is brightest.',
-      plot:`<rect class="night-range" x="${x}" y="${py(data.high)}" width="${width}" height="${py(data.low)-py(data.high)}" rx="1"/>${markers}` +
-        (detail ? label('7 NIGHTS',x,'start') + label('LATEST',right,'end') : '')};
-  }
-
-  if(data.source === 'stress' || data.source === 'body'){
-    const count = 24;
-    const step = width / count;
-    const charging = data.source === 'body';
-    const readings = Array.from({length:count}, (_, i) => data.history[Math.round(i * (data.history.length - 1) / (count - 1))]);
-    const bars = readings.map((value, i) => {
-      const size = Math.max(.7, (floor - top) * value / 100);
-      const direction = charging && i > 0 ? (value > readings[i-1] ? ' recharge' : value < readings[i-1] ? ' drain' : '') : '';
-      return `<rect class="fingerprint-bar${direction}${i === count - 1 ? ' fingerprint-now' : ''}" x="${x + i * step}" y="${floor-size}" width="${step-1.15}" height="${size}" rx=".65">${title(clockLabel(now - data.hours * 60 * (1 - i/(count-1))) + ': ' + Math.round(value))}</rect>`;
-    }).join('');
-    return {type:'fingerprint', description:charging ? 'Body Battery level over time. Cool bars show recharge; warm bars show drain.' : 'Stress over time. Taller bars show higher stress.',
-      plot:bars + (detail ? label(clockLabel(now-data.hours*60),x,'start') + label('NOW',right,'end') : '')};
-  }
-  return null;
-}
-
-function centerDataLabel(data){
-  switch(data.source){
-    case 'weather': return 'WEATHER 8H';
-    case 'daylight': return data.title;
-    case 'range': return 'HRV 7 NIGHTS';
-  }
-  if(dailyGoals[data.source]) return `${data.title} DAILY`;
-  const title = data.source === 'trend' ? 'BPM' : data.title;
-  return `${title} ${data.hours}H`;
-}
-
-function renderCenterComplication(){
-const data=scaledGraphData(centerData()),detail=$('graph-detail').value==='axes',width=CENTER_SIZES.graphWidth,x=150-width/2,top=170,height=CENTER_SIZES.graphHeight;
-const instrument=renderInstrumentPlot(data,x,top,width,height,detail);
-const current=instrument?.value ?? (data.value.toLocaleString('en-US')+(data.unit&&!['stress','body','steps'].includes(data.source)?(data.unit==='°'?'':' ')+data.unit:'')),sourceName=centerDataLabel(data);
-const fraction=value=>Math.max(0,Math.min(1,(value-data.min)/(data.max-data.min)));
-const fmt=value=>{if(data.source==='pressure')return String(Math.round(value));if(Math.abs(value)>=1000)return (value/1000).toFixed(value%1000?1:0)+'k';return Number.isInteger(value)?String(value):value.toFixed(1)};
-let chart=`<g class="graph-header"><text class="graph-source" x="${x}" y="${top-4}">${sourceName}</text><text class="graph-current" x="${x+width}" y="${top-4}" text-anchor="end">${current}</text></g>`;
-const frame=document.body.dataset.finish === 'amber' ? `<rect class="chart-frame" x="${x-3}" y="${top-1}" width="${width+6}" height="${height+2}"/>` : '';
-const bounds=frame+`<rect class="graph-bounds" x="${x}" y="${top}" width="${width}" height="${height}"/>`;
-if(instrument){
-  chart+=`<g class="graph-plot" data-width="${width}" data-height="${height}">${bounds}${instrument.plot}</g>`;
-  return `<g class="adaptive-complication center-complication" data-presentation="${instrument.type}"><title>Sample data. ${instrument.description}</title><g class="center-chart center-complication-unit">${chart}</g></g>`;
-}
-if(detail){
-chart+=`<g class="graph-axis">`;
-for(const t of [0,.5,1]){const value=data.min+(data.max-data.min)*t,y=top+height*(1-t);chart+=`<path class="graph-grid" d="M${x} ${y} H${x+width}"/><text class="axis-value" x="${x+4}" y="${y+(t===1?7:t===0?-3:2)}" text-anchor="${'start'}">${fmt(value)}</text>`}
-const [hh,mm]=$('time').value.split(':').map(Number),now=hh*60+mm;
-for(const t of [0,.5,1]){const label=clockLabel(now-data.hours*60*(1-t));chart+=`<text x="${x+width*t}" y="${top+height+11}" text-anchor="${t===0?'start':t===1?'end':'middle'}">${label}</text>`}
-chart+='</g>';
-}
-chart+=`<g class="graph-plot" data-width="${width}" data-height="${height}" data-min="${data.min}" data-max="${data.max}">${bounds}`;
-const points=data.history.map((value,i)=>[x+i*width/(data.history.length-1),top+height*(1-fraction(value))]);
-chart+=`<polyline class="history-line" points="${points.map(p=>p.join(',')).join(' ')}"/><circle class="graph-endpoint" cx="${points[points.length-1][0]}" cy="${points[points.length-1][1]}" r="1.6"/>`;
-chart+='</g>';
-return `<g class="adaptive-complication center-complication" data-presentation="line"><title>Illustrative ${data.title} ${data.hours}-hour series</title><g class="center-chart center-complication-unit">${chart}</g></g>`;
+function renderCenterReadout(){
+  const source=$('center-source').value;
+  const sample=Number($('sample').value)/100;
+  const steps=Math.round(sample*1250)*10;
+  const value={
+    trend: `${Math.round(52+sample*40)} BPM`,
+    weather: `${weatherTemperatures()[Math.floor(previewMinutes()/60)]}°C`,
+    daylight: daylightReadout(previewMinutes()),
+    stress: `${Math.round(sample*100)} STRESS`,
+    body: `${Math.round(sample*100)} BODY BATTERY`,
+    steps: `${steps>=1000?(steps/1000).toFixed(1)+'K':steps} STEPS`,
+    calories: `${Math.round(900+sample*1800).toLocaleString('en-US')} KCAL`,
+    distance: `${(sample*15).toFixed(1)} KM`,
+    range: `${Math.round(20+sample*80)} MS HRV`,
+    pressure: `${Math.round(1000+sample*25)} hPa`
+  }[source];
+  return `<g id="center-readout"><text x="150" y="150" text-anchor="middle">${value}</text></g>`;
 }
 function dialAnnulus(inner, outer){
   const circle = radius => `M${150+radius} 150 A${radius} ${radius} 0 1 0 ${150-radius} 150 A${radius} ${radius} 0 1 0 ${150+radius} 150 Z`;
@@ -606,16 +514,47 @@ function renderTimeAccents(h,m,s){
 
   const hasTicks = accent==='ring-ticks', hasHours = accent==='ring-hours';
   const hasCompass = accent==='compass';
+  if(finish==='titanium'){
+    shapes+=`<defs>
+      <linearGradient id="classic-metal">
+        <stop stop-color="#353735"/><stop offset=".28" stop-color="#c6cbc8"/>
+        <stop offset=".55" stop-color="#707572"/><stop offset="1" stop-color="#222523"/>
+      </linearGradient>
+      <linearGradient id="classic-hand-light">
+        <stop stop-color="#fff" stop-opacity=".52"/><stop offset=".38" stop-color="#fff" stop-opacity=".06"/>
+        <stop offset=".64" stop-color="#000" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".46"/>
+      </linearGradient>
+    </defs>`;
+  }
+  if(finish==='midnight' && selected==='theme'){
+    for(const angle of [30,60,120,150,210,240,300,330]){
+      const [x,y]=point(outer-2.4,angle);
+      shapes+=`<circle class="minimal-orbit-dot" cx="${x}" cy="${y}" r=".85"/>`;
+    }
+  }
+  if(finish==='amber' && hasTicks){
+    for(let angle=0;angle<360;angle+=30){
+      shapes+=`<path class="instrument-scale" d="${arcPath(outer-7,angle+2.5,angle+27.5)}"/>`;
+    }
+  }
   if(hasTicks || hasHours || hasCompass){
     for(let i=0;i<60;i++){
       if(!hasTicks && i%(hasHours?5:15)!==0) continue;
       const kind = i%15===0?'quarter':i%5===0?'hour':'minor';
-      const length = kind==='quarter'?4.8:kind==='hour'?3.6:2.1;
+      const length = finish==='amber' ? (kind==='minor'?1.7:6) : (kind==='quarter'?5:kind==='hour'?3.8:2.1);
       const end = outer - 1.5;
-      const start = end - (finish === 'midnight' ? length * .65 : length);
+      const start = end - (finish === 'midnight' ? (i===0?5.7:length*.64) : length);
       const angles = finish === 'titanium' && selected === 'theme' && kind === 'quarter' ? [i*6-.8,i*6+.8] : [i*6];
       for(const angle of angles){
-        shapes += `<path class="dial-tick ${kind}-tick" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor"/>`;
+        if(finish==='titanium' && kind!=='minor'){
+          const width=kind==='quarter'?2:2.7;
+          shapes+=`<g class="dial-tick ${kind}-tick" transform="translate(150 150) rotate(${angle})">
+            <rect class="classic-index-mount" x="${-width/2}" y="${-end-.35}" width="${width}" height="${end-start+.7}" rx=".42"/>
+            <path class="classic-index-light" d="M0 ${-start-.7} V${-end+.7}"/>
+          </g>`;
+        } else {
+          shapes+=`<path class="dial-tick ${kind}-tick" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor"/>`;
+        }
       }
     }
   }
@@ -630,11 +569,11 @@ function renderTimeAccents(h,m,s){
       `M-2 ${-root} V${-minuteEnd+5} L0 ${-minuteEnd} L2 ${-minuteEnd+5} V${-root} Z`
     ],
     midnight: [
-      `M-2.6 ${-root} V${-hourEnd} H2.6 V${-root} Z`,
-      `M-1.2 ${-root} V${-minuteEnd} H1.2 V${-root} Z`
+      `M-2.6 ${-root} V${-hourEnd+2.6} A2.6 2.6 0 0 1 2.6 ${-hourEnd+2.6} V${-root} Z`,
+      `M-1.2 ${-root} V${-minuteEnd+1.2} A1.2 1.2 0 0 1 1.2 ${-minuteEnd+1.2} V${-root} Z`
     ],
     amber: [
-      `M-4.5 ${-root} V${-hourEnd+5} H-2.6 V${-hourEnd} H2.6 V${-hourEnd+5} H4.5 V${-root} Z`,
+      `M-4.2 ${-root} L-2.4 ${-hourEnd} H2.4 L4.2 ${-root} Z`,
       `M-1.65 ${-root} V${-minuteEnd} H1.65 V${-root} Z`
     ]
   };
@@ -642,7 +581,17 @@ function renderTimeAccents(h,m,s){
   shapes += '<g class="dial-hands" clip-path="url(#trench-hand-clip)">';
   pointerPaths[finish].forEach((path,index)=>{
     const role = index===0?'hour-pointer':'minute-pointer';
-    shapes += `<path class="analog-stroke analog-pointer ${role}" d="${path}" transform="translate(150 150) rotate(${angles[index]})" fill="currentColor"/>`;
+    const transform = `translate(150 150) rotate(${angles[index]})`;
+    shapes += `<path class="analog-stroke analog-pointer ${role}" d="${path}" transform="${transform}" fill="currentColor"/>`;
+    if(finish==='titanium'){
+      shapes+=`<path class="classic-hand-bevel" d="${path}" transform="${transform}"/>`;
+    }
+    if(finish==='titanium' || (finish==='amber' && index===0)){
+      const x = finish==='amber' ? 0 : (index===0?-2.5:-1);
+      const end = index===0 ? hourEnd : minuteEnd;
+      const inset = finish==='amber' ? ' needle-inset' : '';
+      shapes += `<path class="hand-inlay${inset}" d="M${x} ${-inner-1} V${-end+4}" transform="${transform}"/>`;
+    }
   });
   shapes += '</g>';
   return `<g class="time-accent">${shapes}</g>`;
@@ -661,33 +610,15 @@ top=Math.min(top,pos.y-metrics.actualBoundingBoxAscent);bottom=Math.max(bottom,p
 }
 return Number.isFinite(top)?{x:left,y:top,width:right-left,height:bottom-top}:fallback;
 }
-function updateCenterOptions(){
-  const source=$('center-source').value;
-  const weather=source==='weather';
-  $('history-window').disabled=weather || source==='daylight' || source==='range' || Boolean(dailyGoals[source]);
-  $('weather-rain').disabled=!weather;
-  $('center-description').textContent=weather ? 'Next 8 hours · blue hatching shows rain chance' :
-    source==='daylight' ? 'Sample sunrise and sunset' :
-    source==='range' ? 'Seven sample nights · shaded band shows usual range' :
-    dailyGoals[source] ? 'Progress toward a sample daily goal' :
-    source==='body' ? 'Sample history · cool bars show recharge, warm bars show drain' : 'Sample history';
-}
 function layoutCenter(){
-const svg=$('orbit').querySelector('svg'),timeElement=$('center-time-row'),dateElement=$('center-date-row');
-const time={el:timeElement,bounds:visibleTextBounds(timeElement.querySelector('.wide-time'))},date={el:dateElement,bounds:visibleTextBounds(dateElement.querySelector('text'))};
-const place=(item,top)=>{item.el.setAttribute('transform',`translate(0 ${top-item.bounds.y})`);item.el.dataset.layoutTop=top;item.el.dataset.layoutHeight=item.bounds.height;item.el.dataset.layoutX=item.bounds.x;item.el.dataset.layoutWidth=item.bounds.width};
-const parent=svg.querySelector('.center-complication');let center=null;
-if(parent){const chart=parent.querySelector('.center-chart'),box=chart.getBBox();let bounds={x:box.x,y:box.y,width:box.width,height:box.height};if($('graph-detail').value==='minimal'){const top=Math.min(...Array.from(chart.querySelectorAll('.graph-header text')).map(el=>visibleTextBounds(el).y),chart.querySelector('.graph-plot').getBBox().y);bounds={...bounds,y:top,height:box.y+box.height-top}}center={el:chart,bounds};}
-// Two blocks share equal breathing room around the horizontal midline.
-const dividerY=150,margin=9,dateTimeGap=6;
-const headerHeight=date.bounds.height+dateTimeGap+time.bounds.height;
-let cursor=dividerY-margin-headerHeight;
-place(date,cursor);cursor+=date.bounds.height+dateTimeGap;
-place(time,cursor);
-if(center)place(center,dividerY+margin);
-const divider=document.createElementNS('http://www.w3.org/2000/svg','path');
-divider.classList.add('center-divider');divider.setAttribute('d',`M${150-CENTER_SIZES.graphWidth/2} ${dividerY} H${150+CENTER_SIZES.graphWidth/2}`);svg.appendChild(divider);
-svg.dataset.headerHeight=headerHeight;svg.dataset.centerMargin=margin;
+  const timeRow=$('center-time-row');
+  const time=visibleTextBounds(timeRow.querySelector('.wide-time'));
+  const date=visibleTextBounds($('center-date-row').querySelector('text'));
+  const readout=visibleTextBounds($('center-readout').querySelector('text'));
+  const top=150-time.height/2;
+  timeRow.setAttribute('transform',`translate(0 ${top-time.y})`);
+  $('center-date-row').setAttribute('transform',`translate(0 ${top-6-date.y-date.height})`);
+  $('center-readout').setAttribute('transform',`translate(0 ${top+time.height+7-readout.y})`);
 }
 meta.querySelector('.index').textContent='HOURS → MINUTES → SECONDS';
 meta.querySelector('h2').textContent='Orbit';
@@ -698,7 +629,8 @@ const scale=.69;
 let data='';for(let slot=0;slot<complicationCount();slot++)data+=instrument($('slot-'+slot).value,slot);
 content+=`<g transform="translate(150 150) scale(${scale}) translate(-150 -150)">${data}</g>`;
 const colors=['#edf2ef','#a5b2aa'];
-const fontSize=CENTER_SIZES.time;
+const fontSize=Number($('time-size').value);
+$('time-size-value').value=String(fontSize);
 const outlineMinutes=$('time-style').value==='outline-minutes';
 const twelveHour=$('time-format').value==='12',displayHour=twelveHour?(h%12||12):h;
 const timeGlyphs=`<text class="wide-time" x="150" y="${148+fontSize*.32}" text-anchor="middle" style="font-size:${fontSize}px"><tspan style="color:${colors[0]}">${String(displayHour).padStart(2,'0')}</tspan><tspan style="color:${colors[1]}">${String(m).padStart(2,'0')}</tspan></text>`;
@@ -709,12 +641,11 @@ content+=`<defs><filter id="clean-digit-outline" x="-5%" y="-5%" width="110%" he
 }else content+=`<g class="center-time">${timeGlyphs}</g>`;
 if(twelveHour)content+=`<text id="time-period" class="ampm-indicator" x="150" y="150">${h<12?'AM':'PM'}</text>`;
 content+='</g>';
-content+=renderCenterComplication();
+content+=renderCenterReadout();
 content+=`<g id="center-date-row"><text class="center-date" x="150" y="200" text-anchor="middle">${formatCenterDate()}</text></g>`;
 $('orbit').innerHTML=wrap(content,`Orbit: ${h===0?24:h} hours, ${m} minutes, ${seconds} seconds. Complications use illustrative sample data.`);
 // Use actual glyph bounds so 0% and 100% align with visible digit edges.
 if(outlineMinutes){const fill=$('time-progress-fill'),rect=$('time-progress-rect');if(fill&&rect&&typeof fill.getBBox==='function'){const bounds=fill.getBBox();if(bounds.width>0){rect.setAttribute('x',bounds.x);rect.setAttribute('y',bounds.y-1);rect.setAttribute('width',fill.querySelector('tspan').getBBox().width);rect.setAttribute('height',bounds.height+2);}}}
-updateCenterOptions();
 if(twelveHour){const period=$('time-period'),bounds=visibleTextBounds($('center-time-row').querySelector('.wide-time'));period.setAttribute('x',bounds.x+bounds.width+5);period.setAttribute('y',bounds.y+8)}
 layoutCenter();
 
@@ -723,18 +654,18 @@ function setTime(h,m,s){$('time').value=[h,m,s].map(n=>String(n).padStart(2,'0')
 $('play').addEventListener('click',()=>{playing=!playing;$('play').textContent=playing?'Pause motion':'Resume motion';$('play').setAttribute('aria-pressed',playing)});
 $('now').addEventListener('click',()=>{let d=new Date();setTime(d.getHours(),d.getMinutes(),d.getSeconds())});
 setInterval(()=>{if(!playing)return;const [h,m,s=0]=$('time').value.split(':').map(Number);if(!Number.isFinite(h)||!Number.isFinite(m))return;let n=(h*3600+m*60+s+1)%86400;setTime(Math.floor(n/3600),Math.floor(n/60)%60,n%60)},1000);
-document.querySelector('footer #selection').textContent='Orbit / four complications · six-slot version saved';
+document.querySelector('footer #selection').textContent='Orbit / two to four complications';
 
 for(const id of ['time-accent','guides'])$(id).addEventListener('input',()=>render());
 $('complication-count').addEventListener('input',()=>{updateSlotPickers();render()});
 for(const id of ['date-format','preview-date'])$(id).addEventListener('input',()=>render());
 $('time-format').addEventListener('input',()=>render());
 $('time-style').addEventListener('input',()=>render());
-for(const id of ['center-source','history-window','graph-detail'])$(id).addEventListener('input',()=>render());
-$('weather-rain').addEventListener('change',()=>render());
+$('center-source').addEventListener('input',()=>render());
 for(const id of ['time-font','text-font'])$(id).addEventListener('input',()=>loadSelectedFonts());
 for(const id of ['accent-color','data-color'])$(id).addEventListener('input',()=>render());
 $('time-weight').addEventListener('input',()=>loadSelectedFonts());
+$('time-size').addEventListener('input',()=>render());
 $('text-size').addEventListener('input',()=>render());
 $('layout').addEventListener('input',()=>render());
 $('show-seconds').addEventListener('change',()=>render());
@@ -745,9 +676,9 @@ updateSlotPickers();
 loadSelectedFonts();
 
 const finishDescriptions = {
-  titanium: 'Brushed metal, a graphite dial, and chamfered hands',
-  midnight: 'Black dial, slim bar hands, and four cardinal marks',
-  amber: 'Stepped hands, ruler ticks, and a framed chart'
+  titanium: 'Brushed case, polished indices, and beveled hands',
+  midnight: 'Black dial, rounded hands, and a sparse dot scale',
+  amber: 'Squared gauges, a segmented scale, and a tapered hour hand'
 };
 const finishButtons = document.querySelectorAll('[data-finish-choice]');
 finishButtons.forEach(button => button.addEventListener('click', () => {
