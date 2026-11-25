@@ -117,19 +117,17 @@ body .screen .center-chart .weather-now{opacity:.2}
 .concept[data-name="Orbit"] .watch { isolation: isolate; }
 
 /* Brushed titanium, a recessed dial, and warm luminous inlays. */
-body[data-finish="titanium"] .watch {
-  background:
-    repeating-linear-gradient(102deg, #fff0 0 1px, #fff1 1.5px, #0003 2px, #fff0 3px),
-    conic-gradient(from -45deg, #e1e2df, #717777 14%, #c0c4c3 27%, #424849 43%,
-      #9a9f9e 57%, #c2c4c0 70%, #3c4243 87%, #e1e2df);
-  box-shadow: 0 16px 35px #000b, inset 0 0 0 1px #d3d5d0,
-    inset 0 0 0 4px #15191880, inset 0 0 8px 4px #0008;
+body[data-finish="slate"] .watch {
+  background: linear-gradient(137deg, #464b4c, #202426 52%, #33393a);
+  box-shadow: 0 16px 35px #000b, inset 0 0 0 1px #6c7473, inset 0 0 0 4px #1a1d1e;
 }
-body[data-finish="titanium"] .watch::after { border: 1px solid #ebeee575; }
-#orbit {
-  background: #000;
-  border-color: #000;
-  box-shadow: none;
+body[data-finish="slate"] .watch::after { border: 1px solid #bac3c02b; }
+#orbit { background: #000; border-color: #000; box-shadow: none; }
+body[data-finish="slate"] #orbit {
+  --slate-reading: color-mix(in srgb, var(--theme-graph) 35%, #83969a);
+  --finish-minutes: #bacacb;
+  background: #272a2b;
+  border-color: transparent;
 }
 body[data-finish="midnight"] .watch {
   background: #181818;
@@ -147,12 +145,6 @@ body[data-finish="amber"] #orbit { background: #101010; }
 #orbit .analog-pointer { display: inline; }
 #orbit .dial-tick { opacity: .68; }
 #orbit .minor-tick { opacity: .34; }
-body[data-finish="titanium"] #orbit .dial-tick { stroke-linecap: round; }
-body[data-finish="titanium"] #orbit .hour-tick,
-body[data-finish="titanium"] #orbit .quarter-tick { stroke-width: 1.75; opacity: .9; }
-#orbit .classic-index-mount { fill: url(#classic-metal); stroke: #131313; stroke-width: .35; }
-#orbit .classic-index-light { stroke: currentColor; stroke-width: .8; stroke-linecap: round; }
-#orbit .classic-hand-bevel { fill: url(#classic-hand-light); }
 #orbit .minimal-orbit-dot { fill: currentColor; opacity: .40; }
 #orbit .instrument-scale { fill: none; stroke: currentColor; stroke-width: .6; opacity: .33; }
 #orbit .hand-inlay { fill: none; stroke: #fff; stroke-width: .55; opacity: .46; }
@@ -209,41 +201,102 @@ body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
 #orbit .icon-value { opacity: .95; }
 #orbit text.curved-value, #orbit text.rim-text { font-weight: 500; }
 #orbit #center-readout text { fill: var(--theme-graph); font: 500 16px var(--watch-font); }
+body[data-finish="slate"] #orbit #center-date-row text {
+  fill: #c1cecf;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+body[data-finish="slate"] #orbit .wide-time { letter-spacing: .65px; }
+body[data-finish="slate"] #orbit :is(.curved-value,.rim-text) { fill: var(--slate-reading); }
+body[data-finish="slate"] #orbit .data-icon { color: var(--slate-reading); stroke-width: 1.15; }
+body[data-finish="slate"] #orbit #center-readout text { fill: var(--slate-reading); }
+body[data-finish="slate"] #orbit #center-readout .readout-unit {
+  font-size: 11px;
+  letter-spacing: .75px;
+  fill: #c1cecf;
+}
+body[data-finish="slate"] #orbit .instrument .track {
+  stroke: #91a5ab;
+  stroke-width: 2;
+  opacity: .3;
+}
+body[data-finish="slate"] #orbit .instrument .metric-arc { stroke-width: 3.6; }
+body[data-finish="slate"] #orbit .instrument circle.lit { r: 3.1; }
+</style>
+<style>
+#orbit .slate-plate { stroke: #12191c; stroke-width: .65; }
+#orbit .slate-index { fill: none; stroke: #0e1112; stroke-width: 1.2; }
+#orbit .slate-index-hour { stroke-width: 2.2; }
+#orbit .slate-index-axis { stroke: #050607; stroke-width: 3.35; }
+#orbit .slate-index-hour { filter: drop-shadow(.45px .45px 0 #4c5456); }
+#orbit .slate-hand { fill: var(--theme-ring); filter: drop-shadow(.35px .55px .45px #0009); }
+#orbit .slate-cardinal {
+  fill: none;
+  stroke: #0c1113;
+  stroke-width: 2.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(.4px .65px 0 #59636590);
+}
+</style>
+<style>
+.controls .slate-control { display: none; }
+body[data-finish="slate"] .controls .slate-control { display: flex; }
+body[data-finish="slate"] .seconds-control,
+body[data-finish="slate"] .digital-layout-control,
+body[data-finish="slate"] .slot-pickers { display: none; }
+body[data-finish="slate"] .controls .slate-control[hidden] { display: none; }
+#orbit .slate-arc-range { fill: #b2bbba; opacity: .32; }
+#orbit .slate-arc-fill { fill: url(#slate-segment-inlay); }
+#orbit .slate-date {
+  fill: none;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#orbit .slate-date-caption { stroke: #829498; }
+#orbit .slate-date-value { stroke: #bdc7c8; stroke-width: 2.05; }
 </style>
 </head>
-<body data-finish="titanium"><main>
+<body data-finish="slate"><main>
 <div class="eyebrow">Lumen / Orbit · study 02</div>
 <header><div><h1>Orbit themes</h1></div></header>
 <section class="controls" aria-label="Preview controls">
 <div class="center-variants finish-picker" role="group" aria-label="Theme">
   <span>THEME</span>
-  <button type="button" data-finish-choice="titanium" aria-pressed="true">Classic</button>
+  <button type="button" data-finish-choice="slate" aria-pressed="true">Slate</button>
   <button type="button" data-finish-choice="midnight" aria-pressed="false">Minimal</button>
   <button type="button" data-finish-choice="amber" aria-pressed="false">Instrument</button>
-  <p id="finish-description" aria-live="polite">Brushed case, polished indices, and beveled hands</p>
+  <p id="finish-description" aria-live="polite">Recessed analog hands, segmented complications, and a date at three o’clock</p>
 </div>
 
-<label class="control">LAYOUT <select id="layout" aria-label="Watch layout comparison"><option value="dense" selected>Expanded core · outer time</option><option value="previous">Previous · outer complications</option></select></label>
+<label class="control digital-layout-control">LAYOUT <select id="layout" aria-label="Watch layout comparison"><option value="dense" selected>Expanded core · outer time</option><option value="previous">Previous · outer complications</option></select></label>
 <label class="control">TIME <input id="time" type="time" value="19:42:18" step="1" aria-label="Preview time"></label>
 <button class="switch" id="play" aria-pressed="true">Pause motion</button><button class="switch" id="now">Current time</button>
 <label class="control">EXPLORE <input id="timeline" type="range" min="0" max="1439" value="1182" aria-label="Time of day"></label>
 <label class="control">ACCENT COLOR <input id="accent-color" type="color" value="#a8ffcd"></label>
 <label class="control">DATA COLOR <input id="data-color" type="color" value="#9bbde0"></label>
 <label class="control">GLOW <input id="glow" type="range" min="0" max="12" value="3" aria-label="Glow strength"></label>
-<div class="time-accent-controls"><label class="control">TIME ACCENT <select id="time-accent" aria-label="Analog time accent"><option value="off">Off</option><option value="floating">Hands only</option><option value="compass">Four compass marks</option><option value="ring-hours">12 hour marks</option><option value="theme" selected>Theme default</option><option value="ring-ticks">60 minute ticks</option></select></label><label class="control"><input id="show-seconds" type="checkbox" checked> Seconds hand</label>
-<label class="control">HAND LENGTH <input id="seconds-length" type="range" min="4" max="11" value="8" step=".5"></label>
-<label class="control">HAND WIDTH <input id="seconds-thickness" type="range" min="1.4" max="4" value="2.8" step=".2"></label></div>
-<label class="control">COMPLICATION GUIDES <select id="guides" aria-label="Complication guide detail"><option value="bare">Tracks only</option><option value="bare-icons" selected>Tracks + readouts</option><option value="ticks">Tracks + ticks</option><option value="full">Tracks + ticks + readouts</option></select></label>
-<label class="control">COMPLICATIONS <select id="complication-count" aria-label="Number of complications"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option></select></label>
-<label class="control">TIME FONT <select id="time-font" aria-label="Time digit font"><option value="mono">Mono · Menlo</option><option value="sans">Clean · Helvetica</option><option value="rounded">Rounded · Avenir</option><option value="roboto">Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" selected title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
-<label class="control">TIME SIZE <input id="time-size" type="range" min="62" max="94" value="82" step="1" aria-label="Center time size"> <output id="time-size-value" for="time-size">82</output></label>
-<label class="control">TIME WEIGHT <select id="time-weight" aria-label="Time font weight"><option value="300">Light</option><option value="400">Regular</option><option value="500">Medium</option><option value="600">Semibold</option><option value="700" selected>Bold</option><option value="800">Heavy</option></select></label>
+<div class="time-accent-controls"><label class="control">TIME ACCENT <select id="time-accent" aria-label="Analog time accent"><option value="off">Off</option><option value="floating">Hands only</option><option value="compass">Four compass marks</option><option value="ring-hours">12 hour marks</option><option value="theme" selected>Theme default</option><option value="ring-ticks">60 minute ticks</option></select></label><label class="control seconds-control"><input id="show-seconds" type="checkbox" checked> Seconds hand</label>
+<label class="control seconds-control">SECONDS LENGTH <input id="seconds-length" type="range" min="4" max="11" value="8" step=".5"></label>
+<label class="control seconds-control">SECONDS WIDTH <input id="seconds-thickness" type="range" min="1.4" max="4" value="2.8" step=".2"></label></div>
+<label class="control digital-layout-control">COMPLICATION GUIDES <select id="guides" aria-label="Complication guide detail"><option value="bare">Tracks only</option><option value="bare-icons" selected>Tracks + readouts</option><option value="ticks">Tracks + ticks</option><option value="full">Tracks + ticks + readouts</option></select></label>
+<label class="control digital-layout-control">COMPLICATIONS <select id="complication-count" aria-label="Number of complications"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option></select></label>
+<label class="control digital-layout-control">TIME FONT <select id="time-font" aria-label="Time digit font"><option value="mono">Mono · Menlo</option><option value="sans">Clean · Helvetica</option><option value="rounded">Rounded · Avenir</option><option value="roboto">Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" selected title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
+<label class="control digital-layout-control">TIME SIZE <input id="time-size" type="range" min="62" max="94" value="82" step="1" aria-label="Center time size"> <output id="time-size-value" for="time-size">82</output></label>
+<label class="control digital-layout-control">TIME WEIGHT <select id="time-weight" aria-label="Time font weight"><option value="300">Light</option><option value="400">Regular</option><option value="500">Medium</option><option value="600">Semibold</option><option value="700" selected>Bold</option><option value="800">Heavy</option></select></label>
 <label class="control">TEXT FONT <select id="text-font" aria-label="Font for date, complications, and guide text"><option value="sans">Clean · Helvetica</option><option value="mono">Mono · Menlo</option><option value="rounded">Rounded · Avenir</option><option value="roboto" selected>Roboto</option><option value="roboto-condensed">Roboto Condensed</option><option value="bionic-approx" title="Browser approximation using Barlow, not the original Garmin Bionic font">Bionic-style · approximation</option></select></label>
-<label class="control">OUTER TEXT SIZE <input id="text-size" type="range" min="9" max="18" value="15" step=".5" aria-label="Outer complication and guide text size"></label>
-<label class="control">TIME STYLE <select id="time-style" aria-label="Time digit fill style"><option value="outline-minutes">Solid hours / outlined minutes</option><option value="solid" selected>Solid time</option></select></label>
-<label class="control">CENTER READOUT <select id="center-source" aria-label="Center complication source"></select></label>
+<label class="control digital-layout-control">COMPLICATION TEXT SIZE <input id="text-size" type="range" min="9" max="18" value="15" step=".5" aria-label="Complication and guide text size"></label>
+<label class="control digital-layout-control">TIME STYLE <select id="time-style" aria-label="Time digit fill style"><option value="outline-minutes">Solid hours / outlined minutes</option><option value="solid" selected>Solid time</option></select></label>
+<label class="control digital-layout-control">CENTER READOUT <select id="center-source" aria-label="Center complication source"></select></label>
+<label class="control slate-control"><input id="slate-single-arm" type="checkbox"> Single analog arm</label>
+<label class="control slate-control">ARCS <select id="slate-arc-count" aria-label="Slate arc count"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></label>
+<label class="control slate-control">ARC 1 <select id="slate-arc-1" aria-label="Slate arc 1"></select></label>
+<label class="control slate-control">ARC 2 <select id="slate-arc-2" aria-label="Slate arc 2"></select></label>
+<label class="control slate-control" hidden>ARC 3 <select id="slate-arc-3" aria-label="Slate arc 3"></select></label>
+<label class="control slate-control" hidden>ARC 4 <select id="slate-arc-4" aria-label="Slate arc 4"></select></label>
 <label class="control">SAMPLE <input id="sample" type="range" min="0" max="100" value="62" aria-label="Sample data variation"></label>
-<label class="control">TIME FORMAT <select id="time-format" aria-label="Time format"><option value="24">24-hour</option><option value="12">12-hour AM/PM</option></select></label>
+<label class="control digital-layout-control">TIME FORMAT <select id="time-format" aria-label="Time format"><option value="24">24-hour</option><option value="12">12-hour AM/PM</option></select></label>
 <label class="control">DATE FORMAT <select id="date-format" aria-label="Date format"><option value="weekday-date">Weekday + day + month</option><option value="day-month">Day + month</option><option value="numeric">DD/MM/YYYY</option><option value="iso">YYYY-MM-DD</option></select></label>
 <label class="control">DATE <input id="preview-date" type="date" value="2026-11-15" aria-label="Preview date"></label>
 </section>
@@ -253,7 +306,7 @@ body[data-finish="amber"] #orbit .quarter-tick { stroke-width: 1.55; }
 <article class="concept" data-name="Lantern"><div class="stage"><div class="watch"><div class="screen" id="lantern"></div></div></div><div class="meta"><span class="index">03 / THE EMBLEM</span><h2>Lantern</h2><p>A glowing hour emblem floats over a minute inscription. Symmetric, ceremonial, and slightly otherworldly.</p><div class="explanation" id="lantern-help"></div><button class="pick">Choose Lantern</button></div></article>
 </section>
 <section class="key"><div class="eyebrow">The shared alphabet</div><p>Ten invented digit symbols. Rune seal reads upper left → upper right → lower left → lower right.</p><div class="alphabet" id="alphabet"></div></section>
-<footer><span>Browser concept study · generic round display · glow is illustrative. Per-second updates need device and battery validation.</span><span id="selection" role="status">Orbit / revision 02</span></footer>
+<footer><span>Browser concept study · generic round display · glow is illustrative. Per-second updates need device and battery validation.</span><span id="selection" role="status">Orbit</span></footer>
 </main>
 <script>
 const paths=['M-10 -16 L10 -16 L10 16 L-10 16 Z','M-8 -8 L0 -16 L0 16 M-8 16 L8 16','M-10 -12 L0 -18 L10 -12 L-10 16 L10 16','M-10 -16 L10 -16 L0 0 L10 16 L-10 16','M-10 -16 L-10 0 L10 0 M7 -16 L7 16','M10 -16 L-10 -16 L-10 0 L10 0 L10 16 L-10 16','M8 -16 L-10 0 L-10 16 L10 16 L10 0 L-10 0','M-10 -16 L10 -16 L0 0 L0 16','M0 -18 L11 -8 L0 0 L-11 -8 Z M0 0 L11 9 L0 18 L-11 9 Z','M10 0 L-10 0 L-10 -16 L10 -16 L10 0 L-8 16'];
@@ -378,7 +431,9 @@ const pos=point(r,angle),a=point(r,first),b=point(r,reverse?start:end),id='icon-
 const icon=watchIcons[source]||watchIcons.date;
 return `<g class="icon-value"><defs><path id="${id}" d="M${a} A${r} ${r} 0 0 ${reverse?0:1} ${b}"/></defs><g class="data-icon" transform="translate(${pos[0]} ${pos[1]}) rotate(${reverse?angle-180:angle}) scale(${iconWidth/14})" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${icon}</g><text class="curved-value" style="font-size:${fontSize}px" dy="${fontSize*.3}"><textPath href="#${id}" startOffset="${offset+iconWidth+gap}">${value}</textPath></text></g>`;
 }
-function complicationRadius(){return denseLayout() ? 115 : 139;}
+function complicationRadius(){
+  return denseLayout() ? 115 : 139;
+}
 function instrument(source,slot){
  const {span,start,end,rowCount}=sectorGeometry(slot);
  // Readouts follow the inside of the complication tracks.
@@ -458,6 +513,122 @@ function daylightReadout(now){
   return Math.floor(remaining / 60) + 'h ' + String(remaining % 60).padStart(2, '0') + 'm';
 }
 
+const slateArcSources={steps:'Steps',body:'Body Battery',daylight:'Daylight',stress:'Stress',
+  calories:'Calories',distance:'Distance',range:'HRV range'};
+
+function populateSlatePicker(id,options,initial){
+  const picker=$(id);
+  picker.innerHTML=Object.entries(options).map(([source,name])=>
+    `<option value="${source}"${source===initial?' selected':''}>${name}</option>`).join('');
+  picker.addEventListener('input',renderSlateSettings);
+}
+
+function renderSlateSettings(){
+  const count=Number($('slate-arc-count').value);
+  for(let slot=1;slot<=4;slot++)$('slate-arc-'+slot).parentElement.hidden=slot>count;
+  const first=$('slate-arc-1');
+  secondsArcOption.hidden=secondsArcOption.disabled=count!==1;
+  if(count!==1 && first.value==='seconds') first.value=lastMetricArc;
+  if(first.value!=='seconds') lastMetricArc=first.value;
+  render();
+}
+
+['steps','body','daylight','range'].forEach((source,index)=>
+  populateSlatePicker('slate-arc-'+(index+1),slateArcSources,source));
+let lastMetricArc=$('slate-arc-1').value;
+const secondsArcOption=new Option('Seconds','seconds');
+secondsArcOption.hidden=secondsArcOption.disabled=true;
+$('slate-arc-1').add(secondsArcOption);
+$('slate-arc-count').addEventListener('input',renderSlateSettings);
+
+function slateReading(source){
+  const p=Number($('sample').value)/100;
+  const now=previewMinutes();
+  const steps=Math.round(p*1250)*10;
+  const battery=Math.round(p*100);
+  const calories=Math.round(900+p*1800);
+  const distance=Number((p*15).toFixed(1));
+  const hrv=Math.round(20+p*80);
+  const sunProgress=Math.max(0,Math.min(1,(now-sampleSun.rise)/(sampleSun.set-sampleSun.rise)));
+  const readings={
+    daylight:{value:daylightReadout(now),progress:sunProgress},
+    stress:{value:String(battery),progress:battery/100},
+    body:{value:`${battery}%`,progress:battery/100},
+    steps:{value:steps.toLocaleString('en-US'),progress:steps/10000},
+    calories:{value:`${calories.toLocaleString('en-US')} kcal`,progress:calories/2400},
+    distance:{value:`${distance.toFixed(1)} km`,progress:distance/10},
+    range:{value:`${hrv} ms`,range:{value:hrv,min:20,max:100,low:48,high:72}},
+  };
+  return readings[source];
+}
+
+const slateArcRadius=88, slateArcDepth=12.4;
+const slateSecondPitch=360/60;
+const slateMinSegmentGap=1.3, slateSegmentWidth=slateSecondPitch-slateMinSegmentGap;
+
+function slateSegmentPath(inner,outer,start,end){
+  const a=point(outer,start), b=point(outer,end), c=point(inner,end), d=point(inner,start);
+  return `M${a} A${outer} ${outer} 0 0 1 ${b} L${c} A${inner} ${inner} 0 0 0 ${d} Z`;
+}
+
+function slateArcSlots(){
+  const count=Number($('slate-arc-count').value);
+  const dateGap=26;
+  const inner=slateArcRadius-slateArcDepth/2, outer=slateArcRadius+slateArcDepth/2;
+  if(count===1){
+    // Use the clock's real second positions, leaving out any segment that overlaps the date.
+    const halfWidth=slateSegmentWidth/2;
+    const segments=Array.from({length:60},(_,second)=>({
+      second,start:second*slateSecondPitch-halfWidth,end:second*slateSecondPitch+halfWidth
+    })).filter(({second})=>Math.abs(second*slateSecondPitch-90)>=dateGap/2+halfWidth);
+    return [{source:$('slate-arc-1').value,segments,inner,outer}];
+  }
+  const firstAngle=90+dateGap/2;
+  const sector=(360-dateGap)/count;
+  const slotGap=8;
+  return Array.from({length:count},(_,slot)=>{
+    const source=$('slate-arc-'+(slot+1)).value;
+    const start=firstAngle+sector*slot+(slot===0?0:slotGap/2);
+    const end=firstAngle+sector*(slot+1)-(slot===count-1?0:slotGap/2);
+    const span=end-start;
+    const cells=Math.floor((span+slateMinSegmentGap)/(slateSegmentWidth+slateMinSegmentGap));
+    const gap=(span-cells*slateSegmentWidth)/(cells-1);
+    const segments=Array.from({length:cells},(_,cell)=>{
+      const cellStart=start+cell*(slateSegmentWidth+gap);
+      return {start:cellStart,end:cellStart+slateSegmentWidth};
+    });
+    return {source,segments,inner,outer};
+  });
+}
+
+function renderSlateArc({source,segments,inner,outer},currentSecond){
+  const isSeconds=source==='seconds';
+  const reading=isSeconds?{value:String(currentSecond).padStart(2,'0')}:slateReading(source);
+  const label=isSeconds?'Seconds':slateArcSources[source];
+  const clamp=value=>Math.max(0,Math.min(1,value));
+  const marker=reading.range
+    ? Math.min(segments.length-1,Math.floor(clamp((reading.range.value-reading.range.min)/(reading.range.max-reading.range.min))*segments.length))
+    : -1;
+  const filledCount=Math.round(clamp(reading.progress ?? 0)*segments.length);
+  const activePaths=[];
+  const bright=path=>{
+    activePaths.push(path);
+    return `<path class="slate-arc-fill" d="${path}"/>`;
+  };
+  const fill=segments.map(({start,end,second},index)=>{
+    if(isSeconds)return second===currentSecond?bright(slateSegmentPath(inner,outer,start,end)):'';
+    if(reading.range){
+      const {min,max,low,high}=reading.range;
+      const value=min+(max-min)*(index+.5)/segments.length;
+      if(index===marker)return bright(slateSegmentPath(inner,outer,start,end));
+      if(value>=low && value<=high)return `<path class="slate-arc-range" d="${slateSegmentPath(inner,outer,start,end)}"/>`;
+      return '';
+    }
+    return index<filledCount?bright(slateSegmentPath(inner,outer,start,end)):'';
+  }).join('');
+  return {activePaths,markup:`<g class="slate-arc"><title>${label}: ${reading.value}</title>${fill}</g>`};
+}
+
 function renderCenterReadout(){
   const source=$('center-source').value;
   const sample=Number($('sample').value)/100;
@@ -474,7 +645,8 @@ function renderCenterReadout(){
     range: `${Math.round(20+sample*80)} MS HRV`,
     pressure: `${Math.round(1000+sample*25)} hPa`
   }[source];
-  return `<g id="center-readout"><text x="150" y="150" text-anchor="middle">${value}</text></g>`;
+  const marked = value;
+  return `<g id="center-readout"><text x="150" y="150" text-anchor="middle">${marked}</text></g>`;
 }
 function dialAnnulus(inner, outer){
   const circle = radius => `M${150+radius} 150 A${radius} ${radius} 0 1 0 ${150-radius} 150 A${radius} ${radius} 0 1 0 ${150+radius} 150 Z`;
@@ -484,13 +656,178 @@ function dialAnnulus(inner, outer){
 function renderSecondsHand(tip, second){
   const length = Number($('seconds-length').value);
   const halfWidth = Number($('seconds-thickness').value) / 2;
-  const finish = document.body.dataset.finish;
-  const bevel = finish === 'titanium' ? Math.min(2, length / 3) : 0;
-  const shoulder = tip - bevel;
-  const tipHalfWidth = bevel ? halfWidth * .55 : halfWidth;
-  const root = tip - length;
   return `<g class="seconds-rail" transform="translate(150 150) rotate(${second * 6})">
-    <path class="second-active" d="M${-halfWidth} ${-root} V${-shoulder} L${-tipHalfWidth} ${-tip} H${tipHalfWidth} L${halfWidth} ${-shoulder} V${-root} Z"/>
+    <path class="second-active" d="M${-halfWidth} ${-tip+length} V${-tip} H${halfWidth} V${-tip+length} Z"/>
+  </g>`;
+}
+
+const slateThree=`M-6.85 -6 L-5.20 -7 H3.88 Q6.85 -7 6.85 -5.2 V-2 Q6.85 0 3.71 0 H-1.90
+       M3.71 0 Q6.85 0 6.85 2 V5.2 Q6.85 7 3.88 7 H-5.20 L-6.85 6`;
+const slateNine=`M6.85 0 H-3.71 Q-6.85 0 -6.85 -1.8 V-5.1 Q-6.85 -7 -3.71 -7 H3.88 Q6.85 -7 6.85 -5.1
+       V5.1 Q6.85 7 3.88 7 H-4.37 L-6.19 6`;
+function renderSlateDial(h,m,s,accent){
+  const inner = 117, outer = 150;
+  const trench = dialAnnulus(inner,outer);
+  const numeralRadius = (inner+outer)/2;
+  const hourAngle=(h%12+m/60+s/3600)*30;
+  const single=$('slate-single-arm').checked;
+  const longAngle=single?hourAngle:(m+s/60)*6;
+  const longTip=outer-(single?.5:7);
+  const arcs=slateArcSlots();
+  const renderedArcs=arcs.map(arc=>renderSlateArc(arc,s));
+  const litPaths=renderedArcs.flatMap(arc=>arc.activePaths);
+  const spill=(role,opacity)=>litPaths.length
+    ? `<use class="slate-inlay-spill-${role}" href="#slate-inlay-light-source" opacity="${opacity}" filter="url(#slate-inlay-diffusion)" aria-hidden="true"/>`
+    : '';
+  // Each compartment cuts through the plate to the shared surface below.
+  const cutouts=arcs.flatMap(({segments,inner,outer})=>segments.map(({start,end})=>
+    `<path class="slate-cutout" d="${slateSegmentPath(inner,outer,start,end)}"/>`
+  )).join('');
+  let layer = `<defs>
+    <radialGradient id="slate-channel-floor" gradientUnits="userSpaceOnUse" cx="150" cy="150" r="150">
+      <stop offset=".78" stop-color="#24282a"/>
+      <stop offset=".91" stop-color="#272b2d"/>
+      <stop offset=".95" stop-color="#24282a"/>
+      <stop offset=".98" stop-color="#1b1e20"/>
+      <stop offset="1" stop-color="#111416"/>
+    </radialGradient>
+    <linearGradient id="slate-plate" x1="0" y1="0" x2=".9" y2="1">
+      <stop stop-color="#364247"/><stop offset=".58" stop-color="#283539"/><stop offset="1" stop-color="#222e32"/>
+    </linearGradient>
+    <radialGradient id="slate-channel-wash">
+      <stop stop-color="var(--theme-ring)" stop-opacity=".15"/>
+      <stop offset=".45" stop-color="var(--theme-ring)" stop-opacity=".095"/>
+      <stop offset=".77" stop-color="var(--theme-ring)" stop-opacity=".04"/>
+      <stop offset="1" stop-color="var(--theme-ring)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="slate-plate-shadow" x="-9%" y="-9%" width="118%" height="118%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.3" flood-color="#030606" flood-opacity=".87"/>
+    </filter>
+    <radialGradient id="slate-segment-inlay" gradientUnits="userSpaceOnUse" cx="150" cy="150" r="${slateArcRadius+slateArcDepth/2}">
+      <stop offset=".868" stop-color="#b1b5b0"/>
+      <stop offset=".893" stop-color="#d7dad5"/>
+      <stop offset="1" stop-color="#eff0eb"/>
+    </radialGradient>
+    <g id="slate-inlay-light-source" fill="#eef3ef">
+      ${litPaths.map(path=>`<path d="${path}"/>`).join('')}
+    </g>
+    <filter id="slate-inlay-diffusion" filterUnits="userSpaceOnUse" x="0" y="0" width="300" height="300"
+      color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8.5"/></filter>
+    <mask id="slate-plate-cutouts" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="300">
+      <rect width="300" height="300" fill="white"/>
+      <g fill="black">${cutouts}</g>
+    </mask>
+    <clipPath id="slate-floor-clip"><circle cx="150" cy="150" r="${outer}"/></clipPath>
+    <clipPath id="slate-hand-slot"><path d="${trench}" clip-rule="evenodd"/></clipPath>
+  </defs>
+  <circle class="slate-trench" cx="150" cy="150" r="${outer}" fill="url(#slate-channel-floor)"/>
+`;
+
+  let hands='';
+  if(accent!=='off'){
+    const wash=(angle,strength)=>`<ellipse cx="0" cy="-104" rx="65" ry="45" opacity="${strength}"
+      transform="translate(150 150) rotate(${angle})"/>`;
+    layer+=`<g class="slate-channel-wash" clip-path="url(#slate-floor-clip)" fill="url(#slate-channel-wash)">
+      ${wash(longAngle,1)}${single?'':wash(hourAngle,.55)}
+    </g>`;
+    const marks={compass:4,'ring-hours':12,'ring-ticks':60}[accent] || 0;
+    for(let i=0;i<marks;i++){
+      const angle=i*360/marks;
+      if(angle===90 || angle===270) continue;
+      const axis=angle===0 || angle===180;
+      const hour=angle%30===0;
+      const start=axis?inner:hour?outer-22:outer-7.5;
+      const marker=axis?' slate-index-axis':hour?' slate-index-hour':'';
+      layer+=`<path class="slate-index${marker}" d="M${point(start,angle)} L${point(outer+.5,angle)}"/>`;
+    }
+    const longHand=`<path class="slate-hand ${single?'slate-hour':'slate-minute'}"
+      transform="translate(150 150) rotate(${longAngle})" d="M-2.2 ${-inner+2} L-1.7 ${-longTip} H1.7 L2.2 ${-inner+2} Z"/>`;
+    const hourHand=single?'':`<path class="slate-hand slate-hour slate-short-hand"
+      transform="translate(150 150) rotate(${hourAngle})" d="M-4.4 ${-inner+2} L-3 ${-inner-14} H3 L4.4 ${-inner+2} Z"/>`;
+    hands=`<g class="slate-hands" clip-path="url(#slate-hand-slot)">${hourHand}${longHand}</g>`;
+  }
+
+  // Single-stroke dial numerals with rounded rectangular corners.
+  layer+=`<path class="slate-cardinal slate-three" aria-label="3" transform="translate(${150+numeralRadius} 150)"
+    d="${slateThree}"/>
+    <path class="slate-cardinal slate-nine" aria-label="9" transform="translate(${150-numeralRadius} 150)"
+    d="${slateNine}"/>`;
+
+  layer+=hands+spill('floor',.85);
+  layer+=`<g filter="url(#slate-plate-shadow)"><circle class="slate-plate" cx="150" cy="150" r="${inner}"
+    fill="url(#slate-plate)" mask="url(#slate-plate-cutouts)"/></g>`;
+
+  layer+=`<circle class="slate-edge" cx="150" cy="150" r="${outer-.35}" fill="none" stroke="#697071" stroke-width=".55" opacity=".42"/>`;
+  return layer+spill('plate',.40)+renderSlateDate()+renderedArcs.map(arc=>arc.markup).join('');
+}
+
+const slateDateGlyphs={
+  '0':'M-4 -7 H4 Q6 -7 6 -5 V5 Q6 7 4 7 H-4 Q-6 7 -6 5 V-5 Q-6 -7 -4 -7 Z',
+  '1':'M-3 -4 L1 -7 H2 V7',
+  '2':'M-6 -5 L-4 -7 H4 Q6 -7 6 -5 V-2 L-6 5 V7 H6',
+  '3':slateThree,
+  '4':'M-4 -7 L-6 1 H6 M3 -7 V7',
+  '5':'M6 -7 H-6 V-1 H4 Q6 -1 6 1 V5 Q6 7 4 7 H-4 L-6 5',
+  '6':'M5 -6 L3 -7 H-4 Q-6 -7 -6 -5 V5 Q-6 7 -4 7 H4 Q6 7 6 5 V1 Q6 -1 4 -1 H-6',
+  '7':'M-6 -7 H6 L-1 7',
+  '8':'M-4 0 Q-6 0 -6 -2 V-5 Q-6 -7 -4 -7 H4 Q6 -7 6 -5 V-2 Q6 0 4 0 H-4 Q-6 0 -6 2 V5 Q-6 7 -4 7 H4 Q6 7 6 5 V2 Q6 0 4 0',
+  '9':slateNine,
+  'A':'M-6 7 V-3 L-3 -7 H3 L6 -3 V7 M-6 1 H6',
+  'B':'M-6 7 V-7 H4 Q6 -7 6 -5 V-2 Q6 0 4 0 H-6 M4 0 Q6 0 6 2 V5 Q6 7 4 7 Z',
+  'C':'M6 -5 L4 -7 H-4 Q-6 -7 -6 -5 V5 Q-6 7 -4 7 H4 L6 5',
+  'D':'M-6 7 V-7 H3 L6 -4 V4 L3 7 Z',
+  'E':'M6 -7 H-6 V7 H6 M-6 0 H3',
+  'F':'M6 -7 H-6 V7 M-6 0 H3',
+  'G':'M6 -5 L4 -7 H-4 Q-6 -7 -6 -5 V5 Q-6 7 -4 7 H4 Q6 7 6 5 V1 H1',
+  'H':'M-6 -7 V7 M6 -7 V7 M-6 0 H6',
+  'I':'M-3 -7 H3 M0 -7 V7 M-3 7 H3',
+  'J':'M6 -7 V5 Q6 7 4 7 H-4 Q-6 7 -6 5 V3',
+  'L':'M-6 -7 V7 H6',
+  'M':'M-7 7 V-7 H-5 L0 1 L5 -7 H7 V7',
+  'N':'M-6 7 V-7 H-4 L4 7 H6 V-7',
+  'O':'M-4 -7 H4 Q6 -7 6 -5 V5 Q6 7 4 7 H-4 Q-6 7 -6 5 V-5 Q-6 -7 -4 -7 Z',
+  'P':'M-6 7 V-7 H4 Q6 -7 6 -5 V-2 Q6 0 4 0 H-6',
+  'R':'M-6 7 V-7 H4 Q6 -7 6 -5 V-2 Q6 0 4 0 H-6 M0 0 L6 7',
+  'S':'M6 -5 L4 -7 H-4 Q-6 -7 -6 -5 V-2 Q-6 0 -4 0 H4 Q6 0 6 2 V5 Q6 7 4 7 H-4 L-6 5',
+  'T':'M-6 -7 H6 M0 -7 V7',
+  'U':'M-6 -7 V5 Q-6 7 -4 7 H4 Q6 7 6 5 V-7',
+  'V':'M-6 -7 L-1 7 H1 L6 -7',
+  'W':'M-7 -7 L-5 7 H-3 L0 -2 L3 7 H5 L7 -7',
+  'Y':'M-6 -7 L0 0 L6 -7 M0 0 V7',
+  '-':'M-3 0 H3',
+  '/':'M-3 7 L3 -7'
+};
+
+function renderSlateDateLine(value,x,y,scale,role){
+  const glyphs=Array.from(value.toUpperCase());
+  const advance=char=>char===' '?8:char==='-'||char==='/'?9:16;
+  const lineWidth=glyphs.reduce((width,char)=>width+advance(char),0);
+  const fittedScale=Math.min(scale,43/Math.max(1,lineWidth));
+  let pen=-lineWidth/2;
+  const paths=glyphs.map(char=>{
+    const width=advance(char);
+    const x=pen+width/2;
+    pen+=width;
+    return slateDateGlyphs[char]?`<path transform="translate(${x} 0)" d="${slateDateGlyphs[char]}"/>`:'';
+  }).join('');
+  return `<g class="slate-date-${role}" transform="translate(${x} ${y}) scale(${fittedScale})">${paths}</g>`;
+}
+
+function renderSlateDate(){
+  const date=selectedDate();
+  const value=formatCenterDate();
+  const x=150+slateArcRadius-2.5;
+  const parts={
+    'weekday-date':[date.day,date.short],
+    'day-month':['',date.short],
+    numeric:[value.slice(-4),value.slice(0,-5)],
+    iso:[value.slice(0,4),value.slice(5)]
+  };
+  const [top,bottom]=parts[$('date-format').value];
+  return `<g class="slate-date" aria-label="${value}">
+    <title>${value}</title>
+    ${top ? renderSlateDateLine(top,x,144.5,.39,'caption') : ''}
+    ${renderSlateDateLine(bottom,x,top?154.5:150,.51,'value')}
   </g>`;
 }
 
@@ -498,34 +835,23 @@ function renderTimeAccents(h,m,s){
   const finish = document.body.dataset.finish;
   const selected = $('time-accent').value;
   const accent = selected === 'theme'
-    ? {titanium:'ring-hours',midnight:'compass',amber:'ring-ticks'}[finish]
+    ? {slate:'ring-hours',midnight:'compass',amber:'ring-ticks'}[finish]
     : selected;
   $('show-seconds').disabled = accent === 'off';
   const showSeconds = accent !== 'off' && $('show-seconds').checked;
   $('seconds-length').disabled = $('seconds-thickness').disabled = !showSeconds;
-  if(accent === 'off') return '';
-
+  if(finish==='slate') return renderSlateDial(h,m,s,accent);
   const inner = denseLayout() ? 125 : 85;
   const outer = denseLayout() ? 144 : 104;
   const bounds = dialAnnulus(inner, outer);
-  let shapes = `<defs>
+  let shapes = '';
+  if(accent === 'off') return shapes;
+  shapes += `<defs>
     <clipPath id="trench-hand-clip"><path d="${bounds}" clip-rule="evenodd"/></clipPath>
   </defs>`;
 
   const hasTicks = accent==='ring-ticks', hasHours = accent==='ring-hours';
   const hasCompass = accent==='compass';
-  if(finish==='titanium'){
-    shapes+=`<defs>
-      <linearGradient id="classic-metal">
-        <stop stop-color="#353735"/><stop offset=".28" stop-color="#c6cbc8"/>
-        <stop offset=".55" stop-color="#707572"/><stop offset="1" stop-color="#222523"/>
-      </linearGradient>
-      <linearGradient id="classic-hand-light">
-        <stop stop-color="#fff" stop-opacity=".52"/><stop offset=".38" stop-color="#fff" stop-opacity=".06"/>
-        <stop offset=".64" stop-color="#000" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".46"/>
-      </linearGradient>
-    </defs>`;
-  }
   if(finish==='midnight' && selected==='theme'){
     for(const angle of [30,60,120,150,210,240,300,330]){
       const [x,y]=point(outer-2.4,angle);
@@ -544,18 +870,8 @@ function renderTimeAccents(h,m,s){
       const length = finish==='amber' ? (kind==='minor'?1.7:6) : (kind==='quarter'?5:kind==='hour'?3.8:2.1);
       const end = outer - 1.5;
       const start = end - (finish === 'midnight' ? (i===0?5.7:length*.64) : length);
-      const angles = finish === 'titanium' && selected === 'theme' && kind === 'quarter' ? [i*6-.8,i*6+.8] : [i*6];
-      for(const angle of angles){
-        if(finish==='titanium' && kind!=='minor'){
-          const width=kind==='quarter'?2:2.7;
-          shapes+=`<g class="dial-tick ${kind}-tick" transform="translate(150 150) rotate(${angle})">
-            <rect class="classic-index-mount" x="${-width/2}" y="${-end-.35}" width="${width}" height="${end-start+.7}" rx=".42"/>
-            <path class="classic-index-light" d="M0 ${-start-.7} V${-end+.7}"/>
-          </g>`;
-        } else {
-          shapes+=`<path class="dial-tick ${kind}-tick" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor"/>`;
-        }
-      }
+      const angle=i*6;
+      shapes+=`<path class="dial-tick ${kind}-tick" d="M${point(start,angle)} L${point(end,angle)}" fill="none" stroke="currentColor"/>`;
     }
   }
 
@@ -564,10 +880,6 @@ function renderTimeAccents(h,m,s){
   const hourEnd = outer - 6;
   const minuteEnd = outer - 2.2;
   const pointerPaths = {
-    titanium: [
-      `M-4 ${-root} V${-hourEnd+4} L0 ${-hourEnd} L4 ${-hourEnd+4} V${-root} Z`,
-      `M-2 ${-root} V${-minuteEnd+5} L0 ${-minuteEnd} L2 ${-minuteEnd+5} V${-root} Z`
-    ],
     midnight: [
       `M-2.6 ${-root} V${-hourEnd+2.6} A2.6 2.6 0 0 1 2.6 ${-hourEnd+2.6} V${-root} Z`,
       `M-1.2 ${-root} V${-minuteEnd+1.2} A1.2 1.2 0 0 1 1.2 ${-minuteEnd+1.2} V${-root} Z`
@@ -583,14 +895,8 @@ function renderTimeAccents(h,m,s){
     const role = index===0?'hour-pointer':'minute-pointer';
     const transform = `translate(150 150) rotate(${angles[index]})`;
     shapes += `<path class="analog-stroke analog-pointer ${role}" d="${path}" transform="${transform}" fill="currentColor"/>`;
-    if(finish==='titanium'){
-      shapes+=`<path class="classic-hand-bevel" d="${path}" transform="${transform}"/>`;
-    }
-    if(finish==='titanium' || (finish==='amber' && index===0)){
-      const x = finish==='amber' ? 0 : (index===0?-2.5:-1);
-      const end = index===0 ? hourEnd : minuteEnd;
-      const inset = finish==='amber' ? ' needle-inset' : '';
-      shapes += `<path class="hand-inlay${inset}" d="M${x} ${-inner-1} V${-end+4}" transform="${transform}"/>`;
+    if(finish==='amber' && index===0){
+      shapes += `<path class="hand-inlay needle-inset" d="M0 ${-inner-1} V${-hourEnd+4}" transform="${transform}"/>`;
     }
   });
   shapes += '</g>';
@@ -613,11 +919,14 @@ return Number.isFinite(top)?{x:left,y:top,width:right-left,height:bottom-top}:fa
 function layoutCenter(){
   const timeRow=$('center-time-row');
   const time=visibleTextBounds(timeRow.querySelector('.wide-time'));
-  const date=visibleTextBounds($('center-date-row').querySelector('text'));
   const readout=visibleTextBounds($('center-readout').querySelector('text'));
   const top=150-time.height/2;
   timeRow.setAttribute('transform',`translate(0 ${top-time.y})`);
-  $('center-date-row').setAttribute('transform',`translate(0 ${top-6-date.y-date.height})`);
+  const dateRow=$('center-date-row');
+  if(dateRow){
+    const date=visibleTextBounds(dateRow.querySelector('text'));
+    dateRow.setAttribute('transform',`translate(0 ${top-6-date.y-date.height})`);
+  }
   $('center-readout').setAttribute('transform',`translate(0 ${top+time.height+7-readout.y})`);
 }
 meta.querySelector('.index').textContent='HOURS → MINUTES → SECONDS';
@@ -625,6 +934,11 @@ meta.querySelector('h2').textContent='Orbit';
 meta.querySelector('p').remove();
 render=function(){if(fontsLoading)return;document.body.dataset.layout=denseLayout()?'dense':'previous';applyGlow();applyColors();applyFonts();document.documentElement.style.setProperty('--time-weight',$('time-weight').value||'600');const parts=$('time').value.split(':').map(Number);const h=parts[0],m=parts[1];if(!Number.isFinite(h)||!Number.isFinite(m))return;seconds=parts[2]||0;
 let content=renderTimeAccents(h,m,seconds);
+const description=`Orbit: ${h} hours, ${m} minutes, ${seconds} seconds. Complications use illustrative sample data.`;
+if(document.body.dataset.finish==='slate'){
+  $('orbit').innerHTML=wrap(content,description);
+  return;
+}
 const scale=.69;
 let data='';for(let slot=0;slot<complicationCount();slot++)data+=instrument($('slot-'+slot).value,slot);
 content+=`<g transform="translate(150 150) scale(${scale}) translate(-150 -150)">${data}</g>`;
@@ -633,7 +947,9 @@ const fontSize=Number($('time-size').value);
 $('time-size-value').value=String(fontSize);
 const outlineMinutes=$('time-style').value==='outline-minutes';
 const twelveHour=$('time-format').value==='12',displayHour=twelveHour?(h%12||12):h;
-const timeGlyphs=`<text class="wide-time" x="150" y="${148+fontSize*.32}" text-anchor="middle" style="font-size:${fontSize}px"><tspan style="color:${colors[0]}">${String(displayHour).padStart(2,'0')}</tspan><tspan style="color:${colors[1]}">${String(m).padStart(2,'0')}</tspan></text>`;
+const baseline=148+fontSize*.32;
+const minuteStyle=`color:${colors[1]}`;
+const timeGlyphs=`<text class="wide-time" x="150" y="${baseline}" text-anchor="middle" style="font-size:${fontSize}px"><tspan style="color:${colors[0]}">${String(displayHour).padStart(2,'0')}</tspan><tspan style="${minuteStyle}">${String(m).padStart(2,'0')}</tspan></text>`;
 content+='<g id="center-time-row">';
 if(outlineMinutes){
 const width=fontSize*2.4,left=150-width/2;
@@ -643,7 +959,7 @@ if(twelveHour)content+=`<text id="time-period" class="ampm-indicator" x="150" y=
 content+='</g>';
 content+=renderCenterReadout();
 content+=`<g id="center-date-row"><text class="center-date" x="150" y="200" text-anchor="middle">${formatCenterDate()}</text></g>`;
-$('orbit').innerHTML=wrap(content,`Orbit: ${h===0?24:h} hours, ${m} minutes, ${seconds} seconds. Complications use illustrative sample data.`);
+$('orbit').innerHTML=wrap(content,description);
 // Use actual glyph bounds so 0% and 100% align with visible digit edges.
 if(outlineMinutes){const fill=$('time-progress-fill'),rect=$('time-progress-rect');if(fill&&rect&&typeof fill.getBBox==='function'){const bounds=fill.getBBox();if(bounds.width>0){rect.setAttribute('x',bounds.x);rect.setAttribute('y',bounds.y-1);rect.setAttribute('width',fill.querySelector('tspan').getBBox().width);rect.setAttribute('height',bounds.height+2);}}}
 if(twelveHour){const period=$('time-period'),bounds=visibleTextBounds($('center-time-row').querySelector('.wide-time'));period.setAttribute('x',bounds.x+bounds.width+5);period.setAttribute('y',bounds.y+8)}
@@ -654,7 +970,7 @@ function setTime(h,m,s){$('time').value=[h,m,s].map(n=>String(n).padStart(2,'0')
 $('play').addEventListener('click',()=>{playing=!playing;$('play').textContent=playing?'Pause motion':'Resume motion';$('play').setAttribute('aria-pressed',playing)});
 $('now').addEventListener('click',()=>{let d=new Date();setTime(d.getHours(),d.getMinutes(),d.getSeconds())});
 setInterval(()=>{if(!playing)return;const [h,m,s=0]=$('time').value.split(':').map(Number);if(!Number.isFinite(h)||!Number.isFinite(m))return;let n=(h*3600+m*60+s+1)%86400;setTime(Math.floor(n/3600),Math.floor(n/60)%60,n%60)},1000);
-document.querySelector('footer #selection').textContent='Orbit / two to four complications';
+
 
 for(const id of ['time-accent','guides'])$(id).addEventListener('input',()=>render());
 $('complication-count').addEventListener('input',()=>{updateSlotPickers();render()});
@@ -662,21 +978,43 @@ for(const id of ['date-format','preview-date'])$(id).addEventListener('input',()
 $('time-format').addEventListener('input',()=>render());
 $('time-style').addEventListener('input',()=>render());
 $('center-source').addEventListener('input',()=>render());
-for(const id of ['time-font','text-font'])$(id).addEventListener('input',()=>loadSelectedFonts());
-for(const id of ['accent-color','data-color'])$(id).addEventListener('input',()=>render());
-$('time-weight').addEventListener('input',()=>loadSelectedFonts());
-$('time-size').addEventListener('input',()=>render());
+const slateDefaults = {
+  'accent-color': '#70f235',
+  'data-color': '#c0d3d6'
+};
+const sharedDefaults = {};
+const customSettings = new Set();
+for(const id of Object.keys(slateDefaults)){
+  const control=$(id);
+  sharedDefaults[id]=control.value;
+  control.addEventListener('input',()=>{
+    customSettings.add(id);
+    render();
+  });
+}
+for(const id of ['text-font','time-font','time-weight','time-size']){
+  $(id).addEventListener('input',()=>loadSelectedFonts());
+}
+
+function applyFinishDefaults(finish){
+  const slate=finish==='slate';
+  const settings=slate ? slateDefaults : sharedDefaults;
+  for(const [id,value] of Object.entries(settings)){
+    if(!customSettings.has(id)) $(id).value=value;
+  }
+  loadSelectedFonts();
+}
 $('text-size').addEventListener('input',()=>render());
 $('layout').addEventListener('input',()=>render());
-$('show-seconds').addEventListener('change',()=>render());
+for(const id of ['show-seconds','slate-single-arm'])$(id).addEventListener('change',()=>render());
 for(const id of ['seconds-length','seconds-thickness'])$(id).addEventListener('input',()=>render());
 for(const id of ['sample',...defaults.map((_,i)=>'slot-'+i)])$(id).addEventListener('input',()=>render());
 meta.insertAdjacentHTML('beforeend','<p style="font-size:12px;color:#71887a;margin-top:22px">All daily values are sample data. Data availability on the target watch needs verification before implementation.</p>');
 updateSlotPickers();
-loadSelectedFonts();
+applyFinishDefaults(document.body.dataset.finish);
 
 const finishDescriptions = {
-  titanium: 'Brushed case, polished indices, and beveled hands',
+  slate: 'Recessed analog hands, segmented complications, and a date at three o’clock',
   midnight: 'Black dial, rounded hands, and a sparse dot scale',
   amber: 'Squared gauges, a segmented scale, and a tapered hour hand'
 };
@@ -686,6 +1024,6 @@ finishButtons.forEach(button => button.addEventListener('click', () => {
   document.body.dataset.finish = finish;
   finishButtons.forEach(choice => choice.setAttribute('aria-pressed', choice === button));
   $('finish-description').textContent = finishDescriptions[finish];
-  render();
+  applyFinishDefaults(finish);
 }));
 </script></body></html>

@@ -13,22 +13,25 @@
         <property id="Slot5" type="number">4</property>
         <property id="Slot6" type="number">5</property>
         <property id="TimeSize" type="number">40</property>
+        <property id="SlateFeatured" type="number">0</property>
+        <property id="SlateLeft" type="number">1</property>
+        <property id="SlateRight" type="number">2</property>
     </properties>
     <strings>
         <string id="FinishTitle">Finish</string>
-        <string id="TitaniumFinish">Classic</string>
+        <string id="SlateFinish">Slate</string>
         <string id="MidnightFinish">Midnight OLED</string>
         <string id="AmberFinish">Amber instrument</string>
         <string id="ShowSecondsTitle">Show seconds indicator</string>
-        <string id="ShowComplicationsTitle">Show battery and steps</string>
-        <string id="ShowCenterDataTitle">Show center graph</string>
+        <string id="ShowComplicationsTitle">Show secondary complications</string>
+        <string id="ShowCenterDataTitle">Show featured complication</string>
         <string id="ComplicationCountTitle">Complication count</string>
         <string id="ComplicationCountOption2">2</string>
         <string id="ComplicationCountOption3">3</string>
         <string id="ComplicationCountOption4">4</string>
         <string id="ComplicationCountOption5">5</string>
         <string id="ComplicationCountOption6">6</string>
-        <string id="CenterSourceTitle">Center graph</string>
+        <string id="CenterSourceTitle">Center data source</string>
         <string id="CenterSourceOption0">Step goal</string>
         <string id="CenterSourceOption1">Heart rate history</string>
         <string id="Slot1Title">Complication 1</string>
@@ -44,11 +47,24 @@
         <string id="Slot5Title">Complication 5</string>
         <string id="Slot6Title">Complication 6</string>
         <string id="TimeSizeTitle">Time size</string>
+        <string id="SlateFeaturedTitle">Slate featured complication</string>
+        <string id="SlateLeftTitle">Slate left readout</string>
+        <string id="SlateRightTitle">Slate right readout</string>
+        <string id="SlateSource0">Daylight</string>
+        <string id="SlateSource1">Steps</string>
+        <string id="SlateSource2">Body Battery</string>
+        <string id="SlateSource3">Heart rate</string>
+        <string id="SlateSource4">Temperature</string>
+        <string id="SlateSource5">Stress</string>
+        <string id="SlateSource6">Calories</string>
+        <string id="SlateSource7">Distance</string>
+        <string id="SlateSource8">Barometric pressure</string>
+        <string id="SlateSource9">Training status</string>
     </strings>
     <settings>
         <setting propertyKey="@Properties.Finish" title="@Strings.FinishTitle">
             <settingConfig type="list">
-                <listEntry value="0">@Strings.TitaniumFinish</listEntry>
+                <listEntry value="0">@Strings.SlateFinish</listEntry>
                 <listEntry value="1">@Strings.MidnightFinish</listEntry>
                 <listEntry value="2">@Strings.AmberFinish</listEntry>
             </settingConfig>
@@ -139,6 +155,48 @@
         </setting>
         <setting propertyKey="@Properties.TimeSize" title="@Strings.TimeSizeTitle">
             <settingConfig type="numeric" min="32" max="48"/>
+        </setting>
+        <setting propertyKey="@Properties.SlateFeatured" title="@Strings.SlateFeaturedTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.SlateSource0</listEntry>
+                <listEntry value="1">@Strings.SlateSource1</listEntry>
+                <listEntry value="2">@Strings.SlateSource2</listEntry>
+                <listEntry value="3">@Strings.SlateSource3</listEntry>
+                <listEntry value="4">@Strings.SlateSource4</listEntry>
+                <listEntry value="5">@Strings.SlateSource5</listEntry>
+                <listEntry value="6">@Strings.SlateSource6</listEntry>
+                <listEntry value="7">@Strings.SlateSource7</listEntry>
+                <listEntry value="8">@Strings.SlateSource8</listEntry>
+                <listEntry value="9">@Strings.SlateSource9</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.SlateLeft" title="@Strings.SlateLeftTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.SlateSource0</listEntry>
+                <listEntry value="1">@Strings.SlateSource1</listEntry>
+                <listEntry value="2">@Strings.SlateSource2</listEntry>
+                <listEntry value="3">@Strings.SlateSource3</listEntry>
+                <listEntry value="4">@Strings.SlateSource4</listEntry>
+                <listEntry value="5">@Strings.SlateSource5</listEntry>
+                <listEntry value="6">@Strings.SlateSource6</listEntry>
+                <listEntry value="7">@Strings.SlateSource7</listEntry>
+                <listEntry value="8">@Strings.SlateSource8</listEntry>
+                <listEntry value="9">@Strings.SlateSource9</listEntry>
+            </settingConfig>
+        </setting>
+        <setting propertyKey="@Properties.SlateRight" title="@Strings.SlateRightTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.SlateSource0</listEntry>
+                <listEntry value="1">@Strings.SlateSource1</listEntry>
+                <listEntry value="2">@Strings.SlateSource2</listEntry>
+                <listEntry value="3">@Strings.SlateSource3</listEntry>
+                <listEntry value="4">@Strings.SlateSource4</listEntry>
+                <listEntry value="5">@Strings.SlateSource5</listEntry>
+                <listEntry value="6">@Strings.SlateSource6</listEntry>
+                <listEntry value="7">@Strings.SlateSource7</listEntry>
+                <listEntry value="8">@Strings.SlateSource8</listEntry>
+                <listEntry value="9">@Strings.SlateSource9</listEntry>
+            </settingConfig>
         </setting>
     </settings>
 </resources>
